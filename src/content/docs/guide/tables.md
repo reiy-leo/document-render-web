@@ -1,6 +1,6 @@
 ---
 title: 表格
-description: fmtagno 表格的写法：表头和数据行、列宽（比例、固定、auto）、合并单元格、行高、单格样式、部位样式和 look 开关。
+description: document-render 表格的写法：表头和数据行、列宽（比例、固定、auto）、合并单元格、行高、单格样式、部位样式和 look 开关。
 sidebar:
   order: 5
 ---
@@ -216,4 +216,4 @@ docx 的 auto 列先按字数估一个宽度，Word 打开后再按内容重排�
 | `tableLayout` | ✓ | ✗（按 `widths` 排） | ✓ |
 | 部位样式 | 逐格写成直接格式 | ✓ | ✓ |
 
-docx 还生成不了真正的 Word 表格样式，部位样式会逐格写进去。Word 里两张表紧挨着会合成一张。所以 fmtagno 在每张表后面放一个很矮的空段落，用表格的 `spaceAfter` 当间距。
+docx 还生成不了真正的 Word 表格样式，部位样式会逐格写进去。Word 里两张表紧挨着会合成一张。所以 document-render 在每张表后面放一个很矮的空段落，用表格的 `spaceAfter` 当间距。

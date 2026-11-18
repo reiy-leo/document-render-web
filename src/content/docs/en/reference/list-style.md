@@ -1,6 +1,6 @@
 ---
 title: List style
-description: fmtagno list fields — numbering type, number format, marker color/font/size, indents, start value — and how multi-level lists work.
+description: document-render list fields — numbering type, number format, marker color/font/size, indents, start value — and how multi-level lists work.
 sidebar:
   order: 6
 ---

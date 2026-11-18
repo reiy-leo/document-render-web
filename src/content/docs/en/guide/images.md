@@ -15,7 +15,7 @@ There are two ways to place an image:
 ```json
 "logo": {
   "type": "Image",
-  "props": { "src": "images/logo.png", "alt": "fmtagno logo", "width": 90, "caption": "Figure 1. Logo" },
+  "props": { "src": "images/logo.png", "alt": "document-render logo", "width": 90, "caption": "Figure 1. Logo" },
   "style": { "horizontalAlign": "center" }
 }
 ```

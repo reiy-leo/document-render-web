@@ -2,12 +2,12 @@ import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 
 export default defineConfig({
-  site: "https://fmtagno.rei8t.dev",
+  site: "https://document-render.rei8t.dev",
   integrations: [
     starlight({
-      title: "fmtagno",
+      title: "document-render",
       description: "一份 JSON，出 Word、PDF 和网页。",
-      logo: { src: "./src/assets/logo.png", alt: "fmtagno" },
+      logo: { src: "./src/assets/logo.png", alt: "document-render" },
       favicon: "/favicon.png",
       customCss: ["./src/styles/theme.css"],
       head: [{ tag: "link", attrs: { rel: "apple-touch-icon", href: "/apple-touch-icon.png" } }],
@@ -16,8 +16,8 @@ export default defineConfig({
         root: { label: "简体中文", lang: "zh-CN" },
         en: { label: "English", lang: "en" },
       },
-      social: [{ icon: "github", label: "GitHub", href: "https://github.com/reiy-leo/fmtagno" }],
-      editLink: { baseUrl: "https://github.com/reiy-leo/fmtagno-web/edit/main/" },
+      social: [{ icon: "github", label: "GitHub", href: "https://github.com/reiy-leo/document-render" }],
+      editLink: { baseUrl: "https://github.com/reiy-leo/document-render-web/edit/main/" },
       lastUpdated: true,
       sidebar: [
         { label: "开始", translations: { en: "Getting started" }, items: [{ autogenerate: { directory: "getting-started" } }] },

@@ -1,6 +1,6 @@
 ---
-title: fmtagno
-description: 一份 JSON，出 Word、PDF 和网页。fmtagno 是单文件的命令行工具，按组件和样式把 JSON 排成 docx、pdf、html。
+title: document-render
+description: 一份 JSON，出 Word、PDF 和网页。document-render 是单文件的命令行工具，按组件和样式把 JSON 排成 docx、pdf、html。
 template: splash
 hero:
   tagline: 一份 JSON，出 Word、PDF 和网页
@@ -13,7 +13,7 @@ hero:
       link: /guide/document/
       variant: secondary
     - text: GitHub
-      link: https://github.com/reiy-leo/fmtagno
+      link: https://github.com/reiy-leo/document-render
       icon: external
       variant: minimal
 ---
@@ -26,7 +26,7 @@ import { Card, CardGrid, Aside } from '@astrojs/starlight/components';
 
 ## 一眼看懂
 
-JSON 里只写「放什么」：标题、正文、列表、表格、图片。再带一点样式。fmtagno 负责排版。
+JSON 里只写「放什么」：标题、正文、列表、表格、图片。再带一点样式。document-render 负责排版。
 
 ```json title="hello.json"
 {
@@ -44,9 +44,9 @@ JSON 里只写「放什么」：标题、正文、列表、表格、图片。再
 ```
 
 ```sh
-fmtagno render hello.json -o hello.docx
-fmtagno render hello.json -o hello.pdf
-fmtagno render hello.json -o hello.html --paged
+document-render render hello.json -o hello.docx
+document-render render hello.json -o hello.pdf
+document-render render hello.json -o hello.html --paged
 ```
 
 ## 能做什么
@@ -68,7 +68,7 @@ fmtagno render hello.json -o hello.html --paged
     把常用排版拼成自己的组件，JSON 里一行引用。
   </Card>
   <Card title="AI 好写" icon="rocket">
-    元素平铺、用 id 互相引用。AI 可以一条条写出来，`fmtagno check` 马上告诉它错在哪。
+    元素平铺、用 id 互相引用。AI 可以一条条写出来，`document-render check` 马上告诉它错在哪。
   </Card>
 </CardGrid>
 

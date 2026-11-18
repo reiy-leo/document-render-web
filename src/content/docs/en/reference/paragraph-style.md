@@ -1,6 +1,6 @@
 ---
 title: Paragraph style
-description: fmtagno paragraph fields — alignment, spacing, line height, indents, pagination control and CJK typesetting switches — with per-format support.
+description: document-render paragraph fields — alignment, spacing, line height, indents, pagination control and CJK typesetting switches — with per-format support.
 sidebar:
   order: 4
 ---

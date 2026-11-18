@@ -1,6 +1,6 @@
 ---
 title: 文字样式
-description: fmtagno 文字字段一览：字体、字号、颜色、加粗、下划线、删除线、上下标、字间距、高亮等，附各格式支持情况。
+description: document-render 文字字段一览：字体、字号、颜色、加粗、下划线、删除线、上下标、字间距、高亮等，附各格式支持情况。
 sidebar:
   order: 3
 ---

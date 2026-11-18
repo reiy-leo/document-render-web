@@ -1,11 +1,11 @@
 ---
 title: Document structure
-description: Top-level fields of an fmtagno JSON document, how elements work (children, props, style, parts), and rich text with runs.
+description: Top-level fields of an document-render JSON document, how elements work (children, props, style, parts), and rich text with runs.
 sidebar:
   order: 1
 ---
 
-An fmtagno document is one JSON object. All elements sit flat in `elements`, reference each other by id, and `root` points at the root element. The structure comes from [json-render](https://github.com/vercel-labs/json-render).
+An document-render document is one JSON object. All elements sit flat in `elements`, reference each other by id, and `root` points at the root element. The structure comes from [json-render](https://github.com/vercel-labs/json-render).
 
 ## Top-level fields
 
@@ -57,7 +57,7 @@ Rules:
 - Each element can be referenced only once. To show the same text twice, write two elements.
 - Reference cycles are errors.
 - Elements nobody references are not rendered, and you get a warning.
-- `root` doesn't have to be a `Document`; if it isn't, fmtagno wraps it in one.
+- `root` doesn't have to be a `Document`; if it isn't, document-render wraps it in one.
 
 There are three containers: `Document`, `Section` and `Slide`. `Document` can be nested to group elements.
 
@@ -114,7 +114,7 @@ An array of runs. Items can be plain strings or objects:
   { "text": "bold", "bold": true }, ", ",
   { "text": "red", "color": "#CF222E" }, ", ",
   { "text": "code", "type": "InlineCode" }, ", ",
-  { "text": "a link", "href": "https://github.com/reiy-leo/fmtagno" }, "."
+  { "text": "a link", "href": "https://github.com/reiy-leo/document-render" }, "."
 ]
 ```
 
@@ -145,7 +145,7 @@ When text ends with `\n`, Word shows one more empty line at the end. From the ne
 ```json title="structure.json"
 {
   "version": "0.1",
-  "meta": { "title": "Structure example", "author": "fmtagno", "lang": "en" },
+  "meta": { "title": "Structure example", "author": "document-render", "lang": "en" },
   "styles": {
     "muted": { "color": "#666666" },
     "center": { "align": "center" }

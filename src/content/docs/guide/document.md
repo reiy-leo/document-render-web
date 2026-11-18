@@ -1,11 +1,11 @@
 ---
 title: 文档结构
-description: fmtagno JSON 的顶层字段、元素写法、children、props、style、parts，以及文字的 runs 写法。
+description: document-render JSON 的顶层字段、元素写法、children、props、style、parts，以及文字的 runs 写法。
 sidebar:
   order: 1
 ---
 
-一份 fmtagno 文档是一个 JSON 对象。所有元素平铺在 `elements` 里，用 id 互相引用，`root` 指向根元素。这套结构沿用 [json-render](https://github.com/vercel-labs/json-render)。
+一份 document-render 文档是一个 JSON 对象。所有元素平铺在 `elements` 里，用 id 互相引用，`root` 指向根元素。这套结构沿用 [json-render](https://github.com/vercel-labs/json-render)。
 
 ## 顶层字段
 
@@ -57,7 +57,7 @@ docx 现在不写 `title`、`author`、`lang`。
 - 每个元素只能引用一次。同一段文字要出现两次，就写两个元素。
 - 引用成环会报错。
 - 没有引用到的元素不渲染，会打一条警告。
-- `root` 不一定是 `Document`。不是的话，fmtagno 在外面自动包一层。
+- `root` 不一定是 `Document`。不是的话，document-render 在外面自动包一层。
 
 容器组件有三个：`Document`、`Section`、`Slide`。`Document` 也能嵌套，用来把几个元素编成一组。
 
@@ -114,7 +114,7 @@ runs 数组。数组里可以直接写字符串，也可以写对象：
   { "text": "加粗", "bold": true }, "、",
   { "text": "红字", "color": "#CF222E" }, "、",
   { "text": "代码", "type": "InlineCode" }, "、",
-  { "text": "链接", "href": "https://github.com/reiy-leo/fmtagno" }, "。"
+  { "text": "链接", "href": "https://github.com/reiy-leo/document-render" }, "。"
 ]
 ```
 
@@ -145,7 +145,7 @@ run 的样式按这个顺序叠：段落的文字样式 → 行内代码的 `Inl
 ```json title="structure.json"
 {
   "version": "0.1",
-  "meta": { "title": "结构示例", "author": "fmtagno", "lang": "zh-CN" },
+  "meta": { "title": "结构示例", "author": "document-render", "lang": "zh-CN" },
   "styles": {
     "muted": { "color": "#666666" },
     "center": { "align": "center" }

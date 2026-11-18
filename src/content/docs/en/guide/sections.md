@@ -68,7 +68,7 @@ Section props:
 Header and footer content are ordinary elements in `elements`, referenced by id:
 
 ```json
-"hdr": { "type": "Text", "props": { "text": "fmtagno example" }, "style": { "fontSize": 9, "align": "right", "borderBottom": "0.5pt solid #999999", "paddingBottom": 2 } },
+"hdr": { "type": "Text", "props": { "text": "document-render example" }, "style": { "fontSize": 9, "align": "right", "borderBottom": "0.5pt solid #999999", "paddingBottom": 2 } },
 "ftr": { "type": "Text", "props": { "text": ["Page ", { "field": "page" }, " of ", { "field": "pages" }] }, "style": { "fontSize": 9, "align": "center" } }
 ```
 

@@ -1,6 +1,6 @@
 ---
 title: Styles
-description: Where fmtagno styles go, which fields inherit, the order styles are combined in, and the built-in defaults.
+description: Where document-render styles go, which fields inherit, the order styles are combined in, and the built-in defaults.
 sidebar:
   order: 3
 ---

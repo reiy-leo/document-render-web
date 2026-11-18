@@ -5,7 +5,7 @@ sidebar:
   order: 8
 ---
 
-A custom component combines built-in components and is used in JSON just like one. fmtagno expands it into built-ins before rendering, so it works in all three formats.
+A custom component combines built-in components and is used in JSON just like one. document-render expands it into built-ins before rendering, so it works in all three formats.
 
 Custom components can only be built from built-ins and other custom components; no code.
 
@@ -48,7 +48,7 @@ Using it:
 | Field | Type | Required | Meaning |
 |---|---|---|---|
 | `name` | string | yes | Component name. Starts with an uppercase letter; letters, digits and `_` only; can't clash with a built-in |
-| `description` | string | no | Shown by `fmtagno catalog` |
+| `description` | string | no | Shown by `document-render catalog` |
 | `container` | boolean | no | Whether it takes children, default `false` |
 | `props` | object | no | Parameter definitions, keyed by name |
 | `template` | object | yes | Template: `root` is the root element id, `elements` works like the document's `elements` |
@@ -115,11 +115,11 @@ Only `.json` files are read, not subdirectories.
 }
 ```
 
-`fmtagno catalog` does not read a nearby `catalog/`; pass `--catalog` to list custom components:
+`document-render catalog` does not read a nearby `catalog/`; pass `--catalog` to list custom components:
 
 ```sh
-fmtagno catalog --catalog catalog/
-fmtagno catalog --json --catalog catalog/
+document-render catalog --catalog catalog/
+document-render catalog --json --catalog catalog/
 ```
 
 ## How styles combine

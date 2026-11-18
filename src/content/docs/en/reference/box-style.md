@@ -1,6 +1,6 @@
 ---
 title: Borders, background and box
-description: fmtagno border, background, padding, width/height, vertical alignment, text rotation and corner radius fields, with per-format support.
+description: document-render border, background, padding, width/height, vertical alignment, text rotation and corner radius fields, with per-format support.
 sidebar:
   order: 5
 ---
@@ -46,7 +46,7 @@ On text, `verticalAlign` means super/subscript (`super` `sub`); on cells and ima
 
 ## Paragraph borders in docx
 
-Word paragraphs have no real box, so fmtagno does this:
+Word paragraphs have no real box, so document-render does this:
 
 - Paragraph borders become Word paragraph borders.
 - `padding` becomes the gap between border and text, so it only works when there is a border. Background without a border ignores `padding`, with a warning.

@@ -15,7 +15,7 @@ sidebar:
 ```json
 "logo": {
   "type": "Image",
-  "props": { "src": "images/logo.png", "alt": "fmtagno 标志", "width": 90, "caption": "图 1 标志" },
+  "props": { "src": "images/logo.png", "alt": "document-render 标志", "width": 90, "caption": "图 1 标志" },
   "style": { "horizontalAlign": "center" }
 }
 ```

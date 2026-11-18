@@ -76,7 +76,7 @@ sidebar:
 }
 ```
 
-fmtagno 从这几个地方读样式集文件：
+document-render 从这几个地方读样式集文件：
 
 1. 文档旁边的 `styles/` 目录，自动读。
 2. `--style-sets` 指定的文件或目录，可以写多次。
@@ -84,7 +84,7 @@ fmtagno 从这几个地方读样式集文件：
 目录里只读 `.json` 文件，不进子目录。同名的样式集定义两次会报错。文件里的样式集和文档里 `styleSets` 同名时，**文档里的优先**。
 
 ```sh
-fmtagno render report.json -o report.pdf --style-sets ~/templates/ --style-set formal
+document-render render report.json -o report.pdf --style-sets ~/templates/ --style-set formal
 ```
 
 `--style-set` 优先于文档里的 `styleSet`。
@@ -179,6 +179,6 @@ fmtagno render report.json -o report.pdf --style-sets ~/templates/ --style-set f
 换一套外观试试：
 
 ```sh
-fmtagno render style-set.json -o a.pdf
-fmtagno render style-set.json -o b.pdf --style-sets my-themes/ --style-set dark
+document-render render style-set.json -o a.pdf
+document-render render style-set.json -o b.pdf --style-sets my-themes/ --style-set dark
 ```

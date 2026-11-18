@@ -1,6 +1,6 @@
 ---
 title: 列表样式
-description: fmtagno 列表字段一览：编号类型、编号模板、编号颜色字体字号、缩进、起始值，以及多级列表的写法。
+description: document-render 列表字段一览：编号类型、编号模板、编号颜色字体字号、缩进、起始值，以及多级列表的写法。
 sidebar:
   order: 6
 ---

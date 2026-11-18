@@ -1,6 +1,6 @@
 ---
 title: 取值写法
-description: fmtagno 样式里长度、颜色、字体、行高、边框、背景、列宽和纸张名的写法。
+description: document-render 样式里长度、颜色、字体、行高、边框、背景、列宽和纸张名的写法。
 sidebar:
   order: 2
 ---

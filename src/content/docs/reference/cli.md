@@ -1,16 +1,16 @@
 ---
 title: 命令行
-description: fmtagno 的命令和参数：render、check、catalog，以及标准输入输出、自动读取的目录和调试变量。
+description: document-render 的命令和参数：render、check、catalog，以及标准输入输出、自动读取的目录和调试变量。
 sidebar:
   order: 1
 ---
 
 ```sh
-fmtagno render <输入> -o <输出> [选项]
-fmtagno check <输入> [选项]
-fmtagno catalog [--json] [--catalog <路径>]...
-fmtagno --version
-fmtagno --help
+document-render render <输入> -o <输出> [选项]
+document-render check <输入> [选项]
+document-render catalog [--json] [--catalog <路径>]...
+document-render --version
+document-render --help
 ```
 
 ## render
@@ -18,9 +18,9 @@ fmtagno --help
 把 JSON 渲染成文件。
 
 ```sh
-fmtagno render report.json -o report.docx
-fmtagno render report.json -o report.html --paged
-fmtagno render report.json -o report.pdf --style-sets themes/ --style-set formal
+document-render render report.json -o report.docx
+document-render render report.json -o report.html --paged
+document-render render report.json -o report.pdf --style-sets themes/ --style-set formal
 ```
 
 | 参数 | 说明 |
@@ -36,7 +36,7 @@ fmtagno render report.json -o report.pdf --style-sets themes/ --style-set formal
 例子：从管道进、从管道出：
 
 ```sh
-cat report.json | fmtagno render - -o - -f pdf > report.pdf
+cat report.json | document-render render - -o - -f pdf > report.pdf
 ```
 
 `xlsx`、`pptx` 要到第二版。现在写这两个扩展名会报错。
@@ -48,7 +48,7 @@ html 默认是一长条网页，分页、页眉页脚、表头重复只在打印
 - 按 `meta.page` 的纸张和页边距切页，`PageBreak` 后面从新页开始。
 - 表格跨页时续页顶上重复表头（`repeatHeader: false` 时不重复）。
 - 显示页眉页脚，填好页码。
-- 排完版后 `<html>` 上会有 `data-fmtagno-ready="1"`。截图、打印的脚本可以等它。
+- 排完版后 `<html>` 上会有 `data-document-render-ready="1"`。截图、打印的脚本可以等它。
 - Paged.js（MIT，0.4.3）已经打包进二进制，离线能用。文件会大 500 KB 左右，打开时要等脚本排完。
 - 屏幕上横竖混排没问题，打印时只用第一节的纸张。
 
@@ -57,7 +57,7 @@ html 默认是一长条网页，分页、页眉页脚、表头重复只在打印
 只校验，不出文件。参数和 `render` 的 `--catalog`、`--style-sets`、`--style-set` 一样。
 
 ```sh
-fmtagno check report.json
+document-render check report.json
 # ok：展开后 12 个元素
 ```
 
@@ -68,9 +68,9 @@ fmtagno check report.json
 列出能用的组件。
 
 ```sh
-fmtagno catalog
-fmtagno catalog --json
-fmtagno catalog --catalog my-components/
+document-render catalog
+document-render catalog --json
+document-render catalog --catalog my-components/
 ```
 
 | 参数 | 说明 |
@@ -83,7 +83,7 @@ fmtagno catalog --catalog my-components/
 ## mcp
 
 :::caution[尚未实现]
-`fmtagno mcp`（以 MCP server 方式运行）还没做，现在运行会报错。
+`document-render mcp`（以 MCP server 方式运行）还没做，现在运行会报错。
 :::
 
 ## 自动读取的目录
@@ -107,8 +107,8 @@ fmtagno catalog --catalog my-components/
 
 ## 调试
 
-出 pdf 时设 `FMTAGNO_DEBUG_TYPST=1`，会把生成的 Typst 源码打到标准错误：
+出 pdf 时设 `DOCUMENT_RENDER_DEBUG_TYPST=1`，会把生成的 Typst 源码打到标准错误：
 
 ```sh
-FMTAGNO_DEBUG_TYPST=1 fmtagno render report.json -o report.pdf 2> report.typ.txt
+DOCUMENT_RENDER_DEBUG_TYPST=1 document-render render report.json -o report.pdf 2> report.typ.txt
 ```

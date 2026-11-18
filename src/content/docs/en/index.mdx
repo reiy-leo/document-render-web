@@ -1,6 +1,6 @@
 ---
-title: fmtagno
-description: One JSON document, out come Word, PDF and web pages. fmtagno is a single-binary CLI that lays out JSON as docx, pdf and html using components and styles.
+title: document-render
+description: One JSON document, out come Word, PDF and web pages. document-render is a single-binary CLI that lays out JSON as docx, pdf and html using components and styles.
 template: splash
 hero:
   tagline: One JSON document. Word, PDF and HTML out.
@@ -13,7 +13,7 @@ hero:
       link: /en/guide/document/
       variant: secondary
     - text: GitHub
-      link: https://github.com/reiy-leo/fmtagno
+      link: https://github.com/reiy-leo/document-render
       icon: external
       variant: minimal
 ---
@@ -26,7 +26,7 @@ The latest pre-release is `v0.1.0-alpha.2`. Field names and behavior may still c
 
 ## At a glance
 
-The JSON says *what* goes on the page: headings, paragraphs, lists, tables, images, plus a little styling. fmtagno does the layout.
+The JSON says *what* goes on the page: headings, paragraphs, lists, tables, images, plus a little styling. document-render does the layout.
 
 ```json title="hello.json"
 {
@@ -44,9 +44,9 @@ The JSON says *what* goes on the page: headings, paragraphs, lists, tables, imag
 ```
 
 ```sh
-fmtagno render hello.json -o hello.docx
-fmtagno render hello.json -o hello.pdf
-fmtagno render hello.json -o hello.html --paged
+document-render render hello.json -o hello.docx
+document-render render hello.json -o hello.pdf
+document-render render hello.json -o hello.html --paged
 ```
 
 ## What it does
@@ -68,7 +68,7 @@ fmtagno render hello.json -o hello.html --paged
     Combine built-ins into your own components and use them in one line.
   </Card>
   <Card title="Easy for AI to write" icon="rocket">
-    Elements are flat and reference each other by id. An AI can emit them one by one, and `fmtagno check` tells it exactly what's wrong.
+    Elements are flat and reference each other by id. An AI can emit them one by one, and `document-render check` tells it exactly what's wrong.
   </Card>
 </CardGrid>
 

@@ -1,6 +1,6 @@
 ---
 title: Table style
-description: fmtagno table-only style fields, Table props, cell objects, parts and look switches, with per-format support.
+description: document-render table-only style fields, Table props, cell objects, parts and look switches, with per-format support.
 sidebar:
   order: 8
 ---

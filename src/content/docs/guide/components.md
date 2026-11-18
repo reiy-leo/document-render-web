@@ -1,6 +1,6 @@
 ---
 title: 内置组件
-description: fmtagno 的十四个内置组件：Document、Heading、Text、Code、List、Table、Image、PageBreak、Divider、Quote、Callout、TableOfContents、Section、Slide，以及写在 runs 里的 InlineCode。
+description: document-render 的十四个内置组件：Document、Heading、Text、Code、List、Table、Image、PageBreak、Divider、Quote、Callout、TableOfContents、Section、Slide，以及写在 runs 里的 InlineCode。
 sidebar:
   order: 2
 ---
@@ -8,8 +8,8 @@ sidebar:
 内置组件一共十四个，外加只能写在 runs 里的 `InlineCode`。命令行里看完整的 props 定义：
 
 ```sh
-fmtagno catalog          # 列出组件
-fmtagno catalog --json   # 每个组件 props 的 JSON Schema
+document-render catalog          # 列出组件
+document-render catalog --json   # 每个组件 props 的 JSON Schema
 ```
 
 | 组件 | 干什么 | 容器 | 部位 |
@@ -63,7 +63,7 @@ fmtagno catalog --json   # 每个组件 props 的 JSON Schema
 | `text` | 字符串或 runs | 是 | 段落文字，runs 写法见[文档结构](/guide/document/) |
 
 ```json
-"intro": { "type": "Text", "props": { "text": ["运行 ", { "type": "InlineCode", "text": "fmtagno check" }, " 校验。"] } }
+"intro": { "type": "Text", "props": { "text": ["运行 ", { "type": "InlineCode", "text": "document-render check" }, " 校验。"] } }
 ```
 
 - 默认样式：段后 6pt。
@@ -74,7 +74,7 @@ fmtagno catalog --json   # 每个组件 props 的 JSON Schema
 行内代码。不能单独当元素，只能写在 runs 里：
 
 ```json
-{ "type": "InlineCode", "text": "fmtagno render doc.json -o out.pdf" }
+{ "type": "InlineCode", "text": "document-render render doc.json -o out.pdf" }
 ```
 
 默认样式：等宽字体（Menlo、Consolas、DejaVu Sans Mono），底色 `#F0F1F3`。改外观就写组件样式 `InlineCode`。
@@ -110,7 +110,7 @@ docx 的段落只在有边框时才用 `padding`，所以代码块在 docx 里�
 每一项可以是：
 
 - 字符串：`"写 JSON"`
-- runs 数组：`[{ "text": "fmtagno render", "type": "InlineCode" }, " 出文件"]`
+- runs 数组：`[{ "text": "document-render render", "type": "InlineCode" }, " 出文件"]`
 - 带子列表的对象：`{ "text": …, "items": [...], "ordered": true }`。`ordered` 不写就跟上一级一样。
 
 ```json
@@ -171,7 +171,7 @@ docx 的段落只在有边框时才用 `padding`，所以代码块在 docx 里�
 | `caption` | 字符串 | 否 | 图片说明，显示在图下面 |
 
 ```json
-"logo": { "type": "Image", "props": { "src": "logo.png", "alt": "fmtagno", "width": 90, "caption": "图 1 标志" } }
+"logo": { "type": "Image", "props": { "src": "logo.png", "alt": "document-render", "width": 90, "caption": "图 1 标志" } }
 ```
 
 默认样式：段后 6pt；说明文字 9pt、`#666666`（部位 `caption`）。格式支持和定位见[图片](/guide/images/)。
@@ -268,7 +268,7 @@ docx 会把内边距和线宽加进左缩进，三种格式里竖线和文字的
 | docx | Word 的 TOC 域。文件里先写好各项文字，没有页码；在 Word 里更新域（右键目录 → 更新域）后才有页码 |
 | html | 直接打开只有链接；加 `--paged` 时由 Paged.js 填页码 |
 
-docx 更新域时，Word 用「目录 1」到「目录 6」样式重排各项。fmtagno 按文档里第一个目录的 `entry` 样式定义这几个样式，所以更新前后看起来一样。
+docx 更新域时，Word 用「目录 1」到「目录 6」样式重排各项。document-render 按文档里第一个目录的 `entry` 样式定义这几个样式，所以更新前后看起来一样。
 
 ## Section
 

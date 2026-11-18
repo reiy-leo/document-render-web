@@ -1,6 +1,6 @@
 ---
 title: Text style
-description: fmtagno text fields — font, size, color, bold, underline, strikethrough, super/subscript, letter spacing, highlight and more — with per-format support.
+description: document-render text fields — font, size, color, bold, underline, strikethrough, super/subscript, letter spacing, highlight and more — with per-format support.
 sidebar:
   order: 3
 ---

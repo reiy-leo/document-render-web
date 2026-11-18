@@ -1,6 +1,6 @@
 ---
 title: Built-in components
-description: fmtagno's fourteen built-in components — Document, Heading, Text, Code, List, Table, Image, PageBreak, Divider, Quote, Callout, TableOfContents, Section, Slide — plus InlineCode for runs.
+description: document-render's fourteen built-in components — Document, Heading, Text, Code, List, Table, Image, PageBreak, Divider, Quote, Callout, TableOfContents, Section, Slide — plus InlineCode for runs.
 sidebar:
   order: 2
 ---
@@ -8,8 +8,8 @@ sidebar:
 There are fourteen built-in components, plus `InlineCode`, which only lives inside runs. To see the full props definitions:
 
 ```sh
-fmtagno catalog          # list components
-fmtagno catalog --json   # JSON Schema of every component's props
+document-render catalog          # list components
+document-render catalog --json   # JSON Schema of every component's props
 ```
 
 | Component | Purpose | Container | Parts |
@@ -63,7 +63,7 @@ The root container; lays out its children in order. No props.
 | `text` | string or runs | yes | Paragraph text; runs are explained in [Document structure](/en/guide/document/) |
 
 ```json
-"intro": { "type": "Text", "props": { "text": ["Run ", { "type": "InlineCode", "text": "fmtagno check" }, " to validate."] } }
+"intro": { "type": "Text", "props": { "text": ["Run ", { "type": "InlineCode", "text": "document-render check" }, " to validate."] } }
 ```
 
 - Default: 6pt after.
@@ -74,7 +74,7 @@ The root container; lays out its children in order. No props.
 Inline code. Not an element on its own; it only appears in runs:
 
 ```json
-{ "type": "InlineCode", "text": "fmtagno render doc.json -o out.pdf" }
+{ "type": "InlineCode", "text": "document-render render doc.json -o out.pdf" }
 ```
 
 Default: monospace (Menlo, Consolas, DejaVu Sans Mono) on `#F0F1F3`. Change it with the `InlineCode` component style.
@@ -110,7 +110,7 @@ docx paragraphs only use `padding` when they have a border, so code blocks get n
 Each item can be:
 
 - a string: `"Write JSON"`
-- a runs array: `[{ "text": "fmtagno render", "type": "InlineCode" }, " to get files"]`
+- a runs array: `[{ "text": "document-render render", "type": "InlineCode" }, " to get files"]`
 - an object with a sub-list: `{ "text": …, "items": [...], "ordered": true }`. Without `ordered` it follows the parent level.
 
 ```json
@@ -171,7 +171,7 @@ Merged cells, per-cell styles, row heights and parts are in [Tables](/en/guide/t
 | `caption` | string | no | Caption shown below the image |
 
 ```json
-"logo": { "type": "Image", "props": { "src": "logo.png", "alt": "fmtagno", "width": 90, "caption": "Figure 1. Logo" } }
+"logo": { "type": "Image", "props": { "src": "logo.png", "alt": "document-render", "width": 90, "caption": "Figure 1. Logo" } }
 ```
 
 Defaults: 6pt after; caption 9pt `#666666` (part `caption`). Format support and positioning: [Images](/en/guide/images/).
@@ -268,7 +268,7 @@ Page numbers come from different places in each format:
 | docx | A Word TOC field. The file holds the entry text without page numbers; update the field in Word (right-click the TOC → Update Field) to get them |
 | html | Plain links when opened directly; with `--paged`, Paged.js fills in page numbers |
 
-When Word updates the field it re-lays the entries with the "TOC 1" to "TOC 6" styles. fmtagno defines those styles from the `entry` style of the first TOC in the document, so it looks the same before and after the update.
+When Word updates the field it re-lays the entries with the "TOC 1" to "TOC 6" styles. document-render defines those styles from the `entry` style of the first TOC in the document, so it looks the same before and after the update.
 
 ## Section
 

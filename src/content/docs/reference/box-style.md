@@ -1,6 +1,6 @@
 ---
 title: 边框、背景和盒子
-description: fmtagno 的边框、背景、内边距、宽高、竖直对齐、文字方向、圆角字段，附各格式支持情况。
+description: document-render 的边框、背景、内边距、宽高、竖直对齐、文字方向、圆角字段，附各格式支持情况。
 sidebar:
   order: 5
 ---
@@ -46,7 +46,7 @@ sidebar:
 
 ## docx 的段落边框
 
-Word 的段落没有真正的「盒子」，fmtagno 这样处理：
+Word 的段落没有真正的「盒子」，document-render 这样处理：
 
 - 段落的边框写成 Word 的段落边框。
 - `padding` 变成边框和文字之间的距离，所以只在有边框时生效。只有背景、没有边框时，`padding` 不起作用，会警告。

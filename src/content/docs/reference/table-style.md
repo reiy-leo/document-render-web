@@ -1,6 +1,6 @@
 ---
 title: 表格样式
-description: fmtagno 表格专用的样式字段、Table 的 props、格子对象、部位和 look 开关，附各格式支持情况。
+description: document-render 表格专用的样式字段、Table 的 props、格子对象、部位和 look 开关，附各格式支持情况。
 sidebar:
   order: 8
 ---

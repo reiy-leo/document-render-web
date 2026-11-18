@@ -1,6 +1,6 @@
 ---
 title: Tables
-description: Writing fmtagno tables — header and rows, column widths (ratio, fixed, auto), merged cells, row heights, per-cell styles, part styles and the look switches.
+description: Writing document-render tables — header and rows, column widths (ratio, fixed, auto), merged cells, row heights, per-cell styles, part styles and the look switches.
 sidebar:
   order: 5
 ---
@@ -216,4 +216,4 @@ Details and format support: [Table style](/en/reference/table-style/).
 | `tableLayout` | ✓ | ✗ (follows `widths`) | ✓ |
 | Part styles | written cell by cell as direct formatting | ✓ | ✓ |
 
-docx can't produce real Word table styles yet, so part styles are written into each cell. Word merges two tables that touch, so fmtagno puts a very short empty paragraph after each table, using the table's `spaceAfter` as the gap.
+docx can't produce real Word table styles yet, so part styles are written into each cell. Word merges two tables that touch, so document-render puts a very short empty paragraph after each table, using the table's `spaceAfter` as the gap.

@@ -1,6 +1,6 @@
 ---
 title: Values
-description: How to write lengths, colors, fonts, line heights, borders, backgrounds, column widths and paper names in fmtagno styles.
+description: How to write lengths, colors, fonts, line heights, borders, backgrounds, column widths and paper names in document-render styles.
 sidebar:
   order: 2
 ---

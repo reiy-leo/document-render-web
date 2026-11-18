@@ -1,6 +1,6 @@
 ---
 title: 段落样式
-description: fmtagno 段落字段一览：对齐、段前段后、行高、缩进、分页控制、中文排版开关，附各格式支持情况。
+description: document-render 段落字段一览：对齐、段前段后、行高、缩进、分页控制、中文排版开关，附各格式支持情况。
 sidebar:
   order: 4
 ---

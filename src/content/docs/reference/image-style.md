@@ -1,6 +1,6 @@
 ---
 title: 图片样式
-description: fmtagno 图片位置字段一览：inline、float、absolute 定位，绕排、偏移、对齐、缩放、旋转、透明度，附各格式支持情况。
+description: document-render 图片位置字段一览：inline、float、absolute 定位，绕排、偏移、对齐、缩放、旋转、透明度，附各格式支持情况。
 sidebar:
   order: 7
 ---

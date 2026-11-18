@@ -1,0 +1,11 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  // 旧域名 fmtagno.rei8t.dev 只做 301 跳转，见 index.ts。
+  "name": "fmtagno-web",
+  "main": "index.ts",
+  "compatibility_date": "2026-11-01",
+  "account_id": "9151f72e404dd53f20b8e6667893237d",
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [{ "pattern": "fmtagno.rei8t.dev", "custom_domain": true }]
+}

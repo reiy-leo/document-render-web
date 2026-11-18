@@ -1,5 +1,5 @@
 {
-  "name": "fmtagno-web",
+  "name": "document-render-web",
   "private": true,
   "type": "module",
   "scripts": {

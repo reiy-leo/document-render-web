@@ -68,7 +68,7 @@ Section 的 props：
 页眉页脚的内容是普通元素，跟正文一样写在 `elements` 里，然后用 id 引用：
 
 ```json
-"hdr": { "type": "Text", "props": { "text": "fmtagno 示例文档" }, "style": { "fontSize": 9, "align": "right", "borderBottom": "0.5pt solid #999999", "paddingBottom": 2 } },
+"hdr": { "type": "Text", "props": { "text": "document-render 示例文档" }, "style": { "fontSize": 9, "align": "right", "borderBottom": "0.5pt solid #999999", "paddingBottom": 2 } },
 "ftr": { "type": "Text", "props": { "text": ["第 ", { "field": "page" }, " 页，共 ", { "field": "pages" }, " 页"] }, "style": { "fontSize": 9, "align": "center" } }
 ```
 

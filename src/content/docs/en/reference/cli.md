@@ -1,16 +1,16 @@
 ---
 title: Command line
-description: fmtagno commands and options — render, check, catalog — plus stdin/stdout, auto-loaded directories and the debug variable.
+description: document-render commands and options — render, check, catalog — plus stdin/stdout, auto-loaded directories and the debug variable.
 sidebar:
   order: 1
 ---
 
 ```sh
-fmtagno render <input> -o <output> [options]
-fmtagno check <input> [options]
-fmtagno catalog [--json] [--catalog <path>]...
-fmtagno --version
-fmtagno --help
+document-render render <input> -o <output> [options]
+document-render check <input> [options]
+document-render catalog [--json] [--catalog <path>]...
+document-render --version
+document-render --help
 ```
 
 Messages and help text are in Chinese for now.
@@ -20,9 +20,9 @@ Messages and help text are in Chinese for now.
 Renders JSON to a file.
 
 ```sh
-fmtagno render report.json -o report.docx
-fmtagno render report.json -o report.html --paged
-fmtagno render report.json -o report.pdf --style-sets themes/ --style-set formal
+document-render render report.json -o report.docx
+document-render render report.json -o report.html --paged
+document-render render report.json -o report.pdf --style-sets themes/ --style-set formal
 ```
 
 | Option | Meaning |
@@ -38,7 +38,7 @@ fmtagno render report.json -o report.pdf --style-sets themes/ --style-set formal
 Pipe in, pipe out:
 
 ```sh
-cat report.json | fmtagno render - -o - -f pdf > report.pdf
+cat report.json | document-render render - -o - -f pdf > report.pdf
 ```
 
 `xlsx` and `pptx` arrive in version 2; those extensions are errors for now.
@@ -50,7 +50,7 @@ By default html is one long page; page breaks, headers, footers and repeated tab
 - Pages are cut using the paper and margins from `meta.page`; content after `PageBreak` starts a new page.
 - Tables that cross pages repeat their header (unless `repeatHeader: false`).
 - Headers and footers are shown with page numbers filled in.
-- When layout finishes, `<html>` gets `data-fmtagno-ready="1"`. Screenshot or print scripts can wait for it.
+- When layout finishes, `<html>` gets `data-document-render-ready="1"`. Screenshot or print scripts can wait for it.
 - Paged.js (MIT, 0.4.3) is bundled in the binary and works offline. Files grow by about 500 KB and take a moment to lay out when opened.
 - Mixed portrait/landscape looks right on screen, but printing uses the first section's paper.
 
@@ -59,7 +59,7 @@ By default html is one long page; page breaks, headers, footers and repeated tab
 Validates without writing a file. Accepts the same `--catalog`, `--style-sets` and `--style-set` as `render`.
 
 ```sh
-fmtagno check report.json
+document-render check report.json
 # ok：展开后 12 个元素
 ```
 
@@ -70,9 +70,9 @@ The message means "ok: 12 elements after expansion", i.e. after custom component
 Lists available components.
 
 ```sh
-fmtagno catalog
-fmtagno catalog --json
-fmtagno catalog --catalog my-components/
+document-render catalog
+document-render catalog --json
+document-render catalog --catalog my-components/
 ```
 
 | Option | Meaning |
@@ -85,7 +85,7 @@ fmtagno catalog --catalog my-components/
 ## mcp
 
 :::caution[Not implemented yet]
-`fmtagno mcp` (run as an MCP server) isn't built yet; running it is an error.
+`document-render mcp` (run as an MCP server) isn't built yet; running it is an error.
 :::
 
 ## Auto-loaded directories
@@ -109,8 +109,8 @@ Relative image paths also resolve from the document's directory.
 
 ## Debugging
 
-For pdf output, set `FMTAGNO_DEBUG_TYPST=1` to print the generated Typst source to stderr:
+For pdf output, set `DOCUMENT_RENDER_DEBUG_TYPST=1` to print the generated Typst source to stderr:
 
 ```sh
-FMTAGNO_DEBUG_TYPST=1 fmtagno render report.json -o report.pdf 2> report.typ.txt
+DOCUMENT_RENDER_DEBUG_TYPST=1 document-render render report.json -o report.pdf 2> report.typ.txt
 ```

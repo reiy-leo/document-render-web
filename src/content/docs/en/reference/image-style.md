@@ -1,6 +1,6 @@
 ---
 title: Image style
-description: fmtagno image position fields — inline, float and absolute positioning, wrapping, offsets, alignment, fit, rotation and opacity — with per-format support.
+description: document-render image position fields — inline, float and absolute positioning, wrapping, offsets, alignment, fit, rotation and opacity — with per-format support.
 sidebar:
   order: 7
 ---

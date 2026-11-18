@@ -1,6 +1,6 @@
 ---
 title: Quick start
-description: Write a minimal fmtagno JSON document, validate it, and render it to docx, pdf and html.
+description: Write a minimal document-render JSON document, validate it, and render it to docx, pdf and html.
 sidebar:
   order: 2
 ---
@@ -46,7 +46,7 @@ How to read it:
 ## 2. Validate
 
 ```sh
-fmtagno check report.json
+document-render check report.json
 # ok：展开后 5 个元素
 ```
 
@@ -63,22 +63,22 @@ Caused by:
     2: level 要在 1 到 6 之间，现在是 7
 ```
 
-That reads: "in the children of `doc` → props of element `title` (Heading) are wrong → level must be 1 to 6, got 7". Misspelled or unknown fields are errors too. fmtagno never silently ignores what you wrote.
+That reads: "in the children of `doc` → props of element `title` (Heading) are wrong → level must be 1 to 6, got 7". Misspelled or unknown fields are errors too. document-render never silently ignores what you wrote.
 
 ## 3. Render
 
 The output extension picks the format:
 
 ```sh
-fmtagno render report.json -o report.docx
-fmtagno render report.json -o report.pdf
-fmtagno render report.json -o report.html
+document-render render report.json -o report.docx
+document-render render report.json -o report.pdf
+document-render render report.json -o report.html
 ```
 
 To page through the HTML in a browser (like Google Docs), add `--paged`:
 
 ```sh
-fmtagno render report.json -o report.html --paged
+document-render render report.json -o report.html --paged
 ```
 
 Styles a format can't express produce a warning, and the file is still written:

@@ -76,7 +76,7 @@ Write a house style as its own JSON file and share it. The file needs a `name`:
 }
 ```
 
-fmtagno reads style set files from:
+document-render reads style set files from:
 
 1. a `styles/` directory next to the document, automatically;
 2. files or directories given with `--style-sets` (repeatable).
@@ -84,7 +84,7 @@ fmtagno reads style set files from:
 Only `.json` files are read, not subdirectories. Defining the same set name twice is an error. When a file and the document's `styleSets` define the same name, **the document wins**.
 
 ```sh
-fmtagno render report.json -o report.pdf --style-sets ~/templates/ --style-set formal
+document-render render report.json -o report.pdf --style-sets ~/templates/ --style-set formal
 ```
 
 `--style-set` overrides the document's `styleSet`.
@@ -179,6 +179,6 @@ Styles written in a component's template rank after generic component styles, so
 Try another look:
 
 ```sh
-fmtagno render style-set.json -o a.pdf
-fmtagno render style-set.json -o b.pdf --style-sets my-themes/ --style-set dark
+document-render render style-set.json -o a.pdf
+document-render render style-set.json -o b.pdf --style-sets my-themes/ --style-set dark
 ```

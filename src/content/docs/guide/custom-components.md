@@ -5,7 +5,7 @@ sidebar:
   order: 8
 ---
 
-自定义组件把几个内置组件拼在一起，JSON 里像内置组件一样引用。渲染前 fmtagno 先把它展开成内置组件，所以三种格式都能用。
+自定义组件把几个内置组件拼在一起，JSON 里像内置组件一样引用。渲染前 document-render 先把它展开成内置组件，所以三种格式都能用。
 
 自定义组件只能用内置组件和别的自定义组件拼，不能写代码。
 
@@ -48,7 +48,7 @@ sidebar:
 | 字段 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `name` | 字符串 | 是 | 组件名。大写字母开头，只能用字母、数字、`_`，不能和内置组件重名 |
-| `description` | 字符串 | 否 | 说明，`fmtagno catalog` 会显示 |
+| `description` | 字符串 | 否 | 说明，`document-render catalog` 会显示 |
 | `container` | 布尔 | 否 | 能不能放子元素，默认 `false` |
 | `props` | 对象 | 否 | 参数定义，键是参数名 |
 | `template` | 对象 | 是 | 模板：`root` 是根元素 id，`elements` 和文档的 `elements` 写法一样 |
@@ -115,11 +115,11 @@ sidebar:
 }
 ```
 
-`fmtagno catalog` 不读文档旁边的 `catalog/`，要看自定义组件就加 `--catalog`：
+`document-render catalog` 不读文档旁边的 `catalog/`，要看自定义组件就加 `--catalog`：
 
 ```sh
-fmtagno catalog --catalog catalog/
-fmtagno catalog --json --catalog catalog/
+document-render catalog --catalog catalog/
+document-render catalog --json --catalog catalog/
 ```
 
 ## 样式怎么叠

@@ -1,6 +1,6 @@
 ---
 title: 快速上手
-description: 写一份最小的 fmtagno JSON，校验，再渲染成 docx、pdf、html。
+description: 写一份最小的 document-render JSON，校验，再渲染成 docx、pdf、html。
 sidebar:
   order: 2
 ---
@@ -46,7 +46,7 @@ sidebar:
 ## 2. 校验
 
 ```sh
-fmtagno check report.json
+document-render check report.json
 # ok：展开后 5 个元素
 ```
 
@@ -61,22 +61,22 @@ Caused by:
     2: level 要在 1 到 6 之间，现在是 7
 ```
 
-字段名拼错、多写了没有的字段，也都会报错。fmtagno 不会悄悄忽略你写的东西。
+字段名拼错、多写了没有的字段，也都会报错。document-render 不会悄悄忽略你写的东西。
 
 ## 3. 渲染
 
 按输出文件的扩展名选格式：
 
 ```sh
-fmtagno render report.json -o report.docx
-fmtagno render report.json -o report.pdf
-fmtagno render report.json -o report.html
+document-render render report.json -o report.docx
+document-render render report.json -o report.pdf
+document-render render report.json -o report.html
 ```
 
 想在浏览器里一页页看（像 Google Docs 那样），加 `--paged`：
 
 ```sh
-fmtagno render report.json -o report.html --paged
+document-render render report.json -o report.html --paged
 ```
 
 某个格式表达不了的样式会打一条警告，文件照样生成：

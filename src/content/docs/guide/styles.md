@@ -1,6 +1,6 @@
 ---
 title: 样式
-description: fmtagno 的样式写在哪、哪些字段会继承、多处样式按什么顺序叠加，以及内置默认样式。
+description: document-render 的样式写在哪、哪些字段会继承、多处样式按什么顺序叠加，以及内置默认样式。
 sidebar:
   order: 3
 ---
