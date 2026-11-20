@@ -1,11 +1,11 @@
 ---
 title: Built-in components
-description: document-render's fourteen built-in components — Document, Heading, Text, Code, List, Table, Image, PageBreak, Divider, Quote, Callout, TableOfContents, Section, Slide — plus InlineCode for runs.
+description: document-render's sixteen built-in components — Document, Heading, Text, Code, Math, List, Table, Image, PageBreak, ColumnBreak, Divider, Quote, Callout, TableOfContents, Section, Slide — plus InlineCode and InlineMath for runs.
 sidebar:
   order: 2
 ---
 
-There are fourteen built-in components, plus `InlineCode`, which only lives inside runs. To see the full props definitions:
+There are sixteen built-in components, plus `InlineCode` (inline code) and `InlineMath` (inline formula), which only live inside runs. To see the full props definitions:
 
 ```sh
 document-render catalog          # list components
@@ -18,14 +18,16 @@ document-render catalog --json   # JSON Schema of every component's props
 | [Heading](#heading) | Heading, levels 1–6 | no | — |
 | [Text](#text) | A paragraph | no | — |
 | [Code](#code) | A code block | no | — |
+| [Math](#math) | Display formula | no | — |
 | [List](#list) | List, can nest | no | `level1`…`level9` `marker` `item` |
 | [Table](#table) | Table | no | see [Tables](/en/guide/tables/) |
 | [Image](#image) | Image | no | `caption` |
 | [PageBreak](#pagebreak) | Page break | no | — |
-| [Divider](#divider) | Horizontal line (next release) | no | — |
-| [Quote](#quote) | Quotation (next release) | no | — |
-| [Callout](#callout) | Callout box (next release) | no | — |
-| [TableOfContents](#tableofcontents) | Table of contents (next release) | no | `title` `entry` |
+| [ColumnBreak](#columnbreak) | Column break | no | — |
+| [Divider](#divider) | Horizontal line | no | — |
+| [Quote](#quote) | Quotation | no | — |
+| [Callout](#callout) | Callout box | no | — |
+| [TableOfContents](#tableofcontents) | Table of contents | no | `title` `entry` |
 | [Section](#section) | Section | yes | — |
 | [Slide](#slide) | One slide | yes | `title` `body` |
 
@@ -99,6 +101,31 @@ A code block; spaces and line breaks are kept.
 Defaults: monospace, 9pt, line height 1.4, background `#F6F8FA`, padding 8pt, 8pt after, `keepTogether`.
 
 docx paragraphs only use `padding` when they have a border, so code blocks get no padding in docx and you'll see one warning. For padding, add a border in the background color.
+
+## Math
+
+A display formula on its own line, written in LaTeX.
+
+| Prop | Type | Required | Meaning |
+|---|---|---|---|
+| `latex` | string | yes | LaTeX source, without `$$`. Double the backslashes in JSON: `\\frac` |
+| `number` | integer or string | no | Equation number; `1` shows "(1)" on the right |
+
+```json
+"quadratic": { "type": "Math", "props": { "latex": "x = \\frac{-b \\pm \\sqrt{b^2-4ac}}{2a}", "number": 1 } }
+```
+
+Defaults: centered, 6pt before, 6pt after.
+
+## InlineMath
+
+An inline formula. Like InlineCode it only lives inside runs; `text` is LaTeX source, without `$`:
+
+```json
+{ "type": "InlineMath", "text": "a^2+b^2=c^2" }
+```
+
+It follows the text style of its paragraph; style it with the `InlineMath` component style. Supported LaTeX and per-format output: [Math](/en/guide/math/).
 
 ## List
 
@@ -186,12 +213,21 @@ Starts a new page. No props.
 
 Plain html shows no page breaks; they appear when printing or with `--paged`.
 
+## ColumnBreak
+
+A column break: in a multi-column section, what follows starts at the top of the next column, like Word's column break. No props.
+
+```json
+"next-col": { "type": "ColumnBreak" }
+```
+
+- In a section without columns, docx and pdf treat it as a page break (as Word and Typst do); html ignores it.
+- Markdown has no columns; it is dropped with one warning.
+- Not allowed in headers and footers.
+
+How to set up columns: [Sections, headers and footers](/en/guide/sections/#column-breaks-columnbreak).
+
 ## Divider
-
-:::note[Next release]
-Divider, Quote, Callout and TableOfContents are new in the next release; v0.1.0-alpha.2 does not have them.
-:::
-
 
 A horizontal line. No props; its look comes entirely from style, and the line is the paragraph's bottom border.
 
@@ -272,7 +308,7 @@ When Word updates the field it re-lays the entries with the "TOC 1" to "TOC 6" s
 
 ## Section
 
-A section. Each one starts on a new page and can set its own paper size, orientation, margins, columns, headers and footers, and page-number start. Sections can only sit directly under the root.
+A section. Each one starts on a new page and can set its own paper size, orientation, margins, columns, headers and footers, page-number start and page-number format. Sections can only sit directly under the root.
 
 ```json
 "body": {
@@ -304,4 +340,4 @@ One 16:9 slide; children are laid out inside.
 ## Next
 
 - [Styles](/en/guide/styles/): where styles go and how they combine.
-- [Tables](/en/guide/tables/), [Images](/en/guide/images/), [Sections, headers and footers](/en/guide/sections/).
+- [Tables](/en/guide/tables/), [Images](/en/guide/images/), [Sections, headers and footers](/en/guide/sections/), [Math](/en/guide/math/).

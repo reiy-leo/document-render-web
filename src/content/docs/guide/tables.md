@@ -59,7 +59,7 @@ sidebar:
 - 只要有一列是比例，表格就撑满版心（或撑到样式里的 `width`）。
 - 全是固定列和 auto 列时，表格宽度就是各列加起来，不撑满。
 - 没写 `widths` 时各列平分。个数和列数对不上时也平分，并给警告。
-- 比例列和 auto 列混写时，auto 列按文字宽度算，最多占一份比例的宽度，文字更长就折行。三种格式列宽一致。（下一版；v0.1.0-alpha.2 的 PDF 里 auto 列会被压窄）
+- 比例列和 auto 列混写时，auto 列按文字宽度算，最多占一份比例的宽度，文字更长就折行。三种格式列宽一致。
 - 只有固定列和 auto 列、又没写 `tableLayout` 时，三种格式都按自动布局排。
 
 例子：章节标题条，左边一条细色块，右边按标题长短变宽：
@@ -128,6 +128,12 @@ docx 的 auto 列先按字数估一个宽度，Word 打开后再按内容重排�
   "lastRow": { "bold": true, "borderTop": "1.5pt double #333333" },
   "lastColumn": { "align": "right" }
 }
+```
+
+表头默认加粗、浅灰底（`#F3F3F3`）。不要灰底，就在表头部位写 `"background": "none"`，三种格式都不画底色；某一格自己写的 `background` 照样画：
+
+```json
+"parts": { "header": { "background": "none" } }
 ```
 
 部位上能写 `padding`、`paddingLeft` 这些，只改这个部位里的格子，没写的边还用 `cellPadding`。部位上的 `verticalAlign`（`top` `middle` `bottom`）和 `textRotation` 管格子里文字的位置和方向。

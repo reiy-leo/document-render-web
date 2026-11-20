@@ -14,7 +14,7 @@ sidebar:
 | `align` | `left` `center` `right` `justify` `distribute` | `"justify"` | 对齐。`distribute` 是分散对齐 | ✓ | ✓ | ✓ `distribute` 按 `justify` 并警告 | ✓ |
 | `spaceBefore` | 长度或 `"Nline"` | `12`、`"0.5line"` | 段前距 | | ✓ | ✓ | ✓ |
 | `spaceAfter` | 同上 | `6` | 段后距 | | ✓ | ✓ | ✓ |
-| `lineHeight` | 倍数、长度或 `{ atLeast }` | `1.5`、`"20pt"` | 行高，见[取值写法](/reference/units/) | ✓ | ✓ | ✓ | ✓ 最小值按固定值处理 |
+| `lineHeight` | 倍数、长度、`{ atLeast }` 或 `{ multiple }` | `1.5`、`"20pt"`、`{ "multiple": 1.5 }` | 行高，见[取值写法](/reference/units/#行高lineheight) | ✓ | ✓ | ✓ | ✓ |
 | `marginLeft` | 长度 | `"2em"` | 整段左缩进 | | ✓ | ✓ | ✓ |
 | `marginRight` | 长度 | `"2em"` | 整段右缩进 | | ✓ | ✓ | ✓ |
 | `textIndent` | 长度 | `"2em"` | 首行缩进 | ✓ | ✓ | ✓ | ✓ |
@@ -40,16 +40,14 @@ sidebar:
 - 首行缩进两个字：`"textIndent": "2em"`。
 - 编号、引文这种「第一行顶格，后面缩进」：`"hangingIndent": "2em"`。
 - 整段往里缩：`"marginLeft": "2em"`。可以和上面两个一起用。
-
-:::note[下一版]
-docx 的 `hangingIndent` 现在首行会往左伸出去，和 pdf、html 不一样。下一版起首行不动，三种格式一致。
-:::
+- 三种格式里 `hangingIndent` 都是首行不动、其他行往里缩。
+- 缩进写成 `em` 时，docx 里同时写 Word 按字符计的缩进（leftChars、rightChars、firstLineChars、hangingChars），在 Word 里改字号，缩进跟着变。
 
 ## 段前段后距
 
 - 段前段后距不继承，只管写了它的那一段。
 - 内置默认：正文段后 6pt，标题段前 12pt（1 级 18pt）、段后 6pt。
-- 节开头和手动分页后，Word 会保留段前距。pdf 现在会吞掉，**下一版**起和 Word 一致。
+- 节开头和手动分页后，Word 会保留段前距，pdf 也一样保留。
 
 ## 例子
 

@@ -21,7 +21,7 @@ hero:
 import { Card, CardGrid, Aside } from '@astrojs/starlight/components';
 
 <Aside type="caution" title="还在 alpha 阶段">
-最新预发布版是 `v0.1.0-alpha.2`。字段名和行为还可能改。标了「下一版」的内容已经写进代码，还没发布。
+最新预发布版是 `v0.1.0-alpha.4`（2026-11-20）。字段名和行为还可能改。标了「下一版」的内容已经写进代码，还没发布。
 </Aside>
 
 ## 一眼看懂
@@ -53,7 +53,7 @@ document-render render hello.json -o hello.html --paged
 
 <CardGrid>
   <Card title="三种格式一份数据" icon="document">
-    同一份 JSON 出 docx、pdf、html。哪个格式表达不了某个样式，就给一条警告，不报错。
+    同一份 JSON 出 docx、pdf、html，也能出只留结构的 Markdown。哪个格式表达不了某个样式，就给一条警告，不报错。
   </Card>
   <Card title="样式像 CSS" icon="pencil">
     字段名跟 CSS 走：`fontSize`、`lineHeight`、`border`。取值以 Word 能表达的为准。
@@ -77,4 +77,5 @@ document-render render hello.json -o hello.html --paged
 - 没装过：看[安装](/getting-started/install/)。
 - 想先跑通一份：看[快速上手](/getting-started/quick-start/)。
 - 要改现成的 JSON：先看[文档结构](/guide/document/)，再查[组件](/guide/components/)和[样式](/guide/styles/)。
+- 手里已经有 Word 文档：用 `document-render parse` [读回 JSON](/guide/parse/)，改完再出文件。
 - 查某个字段：去「参考」一栏。

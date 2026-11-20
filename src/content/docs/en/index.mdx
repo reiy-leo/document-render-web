@@ -21,7 +21,7 @@ hero:
 import { Card, CardGrid, Aside } from '@astrojs/starlight/components';
 
 <Aside type="caution" title="Alpha software">
-The latest pre-release is `v0.1.0-alpha.2`. Field names and behavior may still change. Anything marked "next release" is already in the code but not released yet.
+The latest pre-release is `v0.1.0-alpha.4` (2026-11-20). Field names and behavior may still change. Anything marked "next release" is already in the code but not released yet.
 </Aside>
 
 ## At a glance
@@ -53,7 +53,7 @@ document-render render hello.json -o hello.html --paged
 
 <CardGrid>
   <Card title="One source, three formats" icon="document">
-    The same JSON renders to docx, pdf and html. If a format can't express a style, you get a warning, not an error.
+    The same JSON renders to docx, pdf and html, plus structure-only Markdown. If a format can't express a style, you get a warning, not an error.
   </Card>
   <Card title="CSS-like styles" icon="pencil">
     Field names follow CSS: `fontSize`, `lineHeight`, `border`. Values follow what Word can express.
@@ -77,4 +77,5 @@ document-render render hello.json -o hello.html --paged
 - Not installed yet: [Install](/en/getting-started/install/).
 - Want to see it work first: [Quick start](/en/getting-started/quick-start/).
 - Editing an existing JSON file: read [Document structure](/en/guide/document/), then look up [Components](/en/guide/components/) and [Styles](/en/guide/styles/).
+- Already have a Word document: `document-render parse` [reads it back into JSON](/en/guide/parse/); edit it and render again.
 - Looking up a field: see the Reference section.

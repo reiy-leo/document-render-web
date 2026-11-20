@@ -1,6 +1,6 @@
 ---
 title: 页面设置
-description: meta.page 和 Section 的字段：纸张、方向、页边距、装订线、分栏、页眉页脚、页码起始值，附各格式支持情况。
+description: meta.page 和 Section 的字段：纸张、方向、页边距、装订线、分栏、页眉页脚、页码起始值和页码格式，附各格式支持情况。
 sidebar:
   order: 9
 ---
@@ -22,7 +22,9 @@ sidebar:
 | `header` | 元素 id，或 `{ default, first, even }` | 无 | `"hdr"` | 页眉 | ✓ | ✓ | `--paged` 时 ✓ |
 | `footer` | 同上 | 无 | `"ftr"` | 页脚 | ✓ | ✓ | `--paged` 时 ✓ |
 | `pageNumberStart` | 整数 | 接着数 | `1` | 页码从几开始 | ✓ | ✓ | `--paged` 时 ✓ |
+| `pageNumberFormat` | `decimal` `lowerRoman` `upperRoman` `lowerLetter` `upperLetter` `chineseCounting` | `decimal` | `"lowerRoman"` | 页码用什么数字，见[页码格式](/guide/sections/#页码格式) | ✓ | ✓ | `--paged` 时 ✓ |
 
+- 分栏的节里用 [ColumnBreak](/guide/components/#columnbreak) 跳到下一栏。
 - 页面内容竖直对齐（Word 的 `vAlign`）尚未实现，现在写 `verticalAlign` 会报错。
 - 纸张名：`A3` `A4` `A5` `B5` `Letter` `Legal`，大小写都行。不认识的按 A4 处理并警告。
 - 页面设置只认绝对长度（pt mm cm in px）。

@@ -1,6 +1,6 @@
 ---
 title: Page setup
-description: Fields of meta.page and Section — paper, orientation, margins, gutter, columns, headers and footers, page-number start — with per-format support.
+description: Fields of meta.page and Section — paper, orientation, margins, gutter, columns, headers and footers, page-number start and format — with per-format support.
 sidebar:
   order: 9
 ---
@@ -22,7 +22,9 @@ Legend: ✓ supported.
 | `header` | element id, or `{ default, first, even }` | none | `"hdr"` | Header | ✓ | ✓ | ✓ with `--paged` |
 | `footer` | same | none | `"ftr"` | Footer | ✓ | ✓ | ✓ with `--paged` |
 | `pageNumberStart` | integer | continues | `1` | First page number | ✓ | ✓ | ✓ with `--paged` |
+| `pageNumberFormat` | `decimal` `lowerRoman` `upperRoman` `lowerLetter` `upperLetter` `chineseCounting` | `decimal` | `"lowerRoman"` | Number style for page numbers, see [Page number format](/en/guide/sections/#page-number-format) | ✓ | ✓ | ✓ with `--paged` |
 
+- In a multi-column section, [ColumnBreak](/en/guide/components/#columnbreak) jumps to the next column.
 - Vertical alignment of page content (Word's `vAlign`) is not implemented; `verticalAlign` here is currently an error.
 - Paper names: `A3` `A4` `A5` `B5` `Letter` `Legal`, case-insensitive. Unknown names fall back to A4 with a warning.
 - Page settings take absolute lengths only (pt mm cm in px).

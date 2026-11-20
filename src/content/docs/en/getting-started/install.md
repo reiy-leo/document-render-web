@@ -8,20 +8,20 @@ sidebar:
 document-render is a single executable. It doesn't need Word, LibreOffice or anything else. Download it, put it on your `PATH`, done.
 
 :::caution[Alpha]
-Only GitHub pre-releases exist for now; the latest is `v0.1.0-alpha.2`. Homebrew isn't available yet.
+Only GitHub pre-releases exist for now; the latest is `v0.1.0-alpha.4` (2026-11-20). Homebrew isn't available yet.
 :::
 
 :::note[Renamed]
-document-render used to be called fmtagno. In the `v0.1.0-alpha.2` and earlier archives the executable is still named `fmtagno`; it works the same, so swap `document-render` for `fmtagno` in the commands below.
+document-render used to be called fmtagno. From `v0.1.0-alpha.4` on, the executable is named `document-render`; in `v0.1.0-alpha.2` and earlier archives it is still `fmtagno`. An `fmtagno` you installed before is not removed automatically; delete it yourself if you no longer need it.
 :::
 
 ## Download a prebuilt binary
 
 1. Open [GitHub Releases](https://github.com/reiy-leo/document-render/releases) and find the latest pre-release.
 2. Download the archive for your system. Three are available:
-   - macOS Intel (x86_64)
-   - macOS Apple Silicon (arm64)
-   - Linux x86_64
+   - macOS Intel: `document-render-0.1.0-alpha.4-x86_64-apple-darwin.tar.gz`
+   - macOS Apple Silicon: `document-render-0.1.0-alpha.4-aarch64-apple-darwin.tar.gz`
+   - Linux x86_64: `document-render-0.1.0-alpha.4-x86_64-unknown-linux-gnu.tar.gz` (needs glibc 2.28 or newer)
 3. Optionally verify it against `SHA256SUMS` from the same page:
 
    ```sh
@@ -40,7 +40,7 @@ document-render used to be called fmtagno. In the `v0.1.0-alpha.2` and earlier a
 
    ```sh
    document-render --version
-   # document-render 0.1.0-alpha.x
+   # document-render 0.1.0-alpha.4
    ```
 
 If macOS says the developer can't be verified on first run, click "Open Anyway" in System Settings → Privacy & Security, or run:
@@ -64,7 +64,7 @@ cargo build --release
 
 - **docx**: only font names are written. The reader's computer supplies the fonts.
 - **html**: same, the browser picks fonts.
-- **pdf**: fonts are embedded at render time, so they must be installed on **the machine running document-render**. For Chinese text it looks for PingFang SC, Hiragino Sans GB, Noto Sans CJK SC, Source Han Sans SC and Microsoft YaHei, in that order. If none is found it falls back to Typst's bundled fonts, and CJK characters may be missing.
+- **pdf**: fonts are embedded at render time, so they must be installed on **the machine running document-render**. For Chinese text it looks for PingFang SC, Hiragino Sans GB, Microsoft YaHei, Noto Sans CJK SC and Source Han Sans SC, in that order. If none is found it falls back to Typst's bundled fonts, and CJK characters may be missing.
 
 To render PDFs on Linux, install a CJK font first:
 

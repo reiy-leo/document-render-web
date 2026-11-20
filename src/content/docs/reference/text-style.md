@@ -29,6 +29,14 @@ sidebar:
 | `lang` | BCP 47 语言代码 | `"en-US"` | 这段文字的语言 | — | ✓ | ✓ |
 | `hidden` | 布尔 | `true` | 隐藏文字 | ✓ | ✓ | ✓ |
 
+## 上标下标
+
+`verticalAlign` 写 `"super"` 是上标，`"sub"` 是下标。
+
+:::note[下一版]
+字号和抬高量取字体自带的上标下标值，跟 Word 一样；这段文字里有中文时看东亚字体。`v0.1.0-alpha.4` 里 html 固定缩成 0.75 倍字号，pdf 用 Typst 的默认做法。
+:::
+
 ## 线型
 
 `underline` 的值：

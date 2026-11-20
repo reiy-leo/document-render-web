@@ -29,6 +29,14 @@ Legend: ✓ supported; ✗ ignored with a warning; — ignored silently.
 | `lang` | BCP 47 code | `"en-US"` | Language of this text | — | ✓ | ✓ |
 | `hidden` | boolean | `true` | Hidden text | ✓ | ✓ | ✓ |
 
+## Superscript and subscript
+
+`verticalAlign: "super"` is superscript, `"sub"` is subscript.
+
+:::note[Next release]
+Size and raise come from the superscript and subscript values built into the font, as in Word; when the text contains Chinese, the East Asian font's values are used. In `v0.1.0-alpha.4` html always shrinks to 0.75 of the font size and pdf uses Typst's default.
+:::
+
 ## Line styles
 
 Values for `underline`:

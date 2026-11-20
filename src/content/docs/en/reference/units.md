@@ -70,13 +70,28 @@ Hex only:
 | number | `1.5` | Multiple: font size × 1.5 |
 | `em` or `%` | `"1.5em"`, `"150%"` | Also a multiple |
 | other length | `"20pt"` | Exact |
-| `{ "atLeast": length }` | `{ "atLeast": "18pt" }` | Minimum |
+| `{ "atLeast": length }` | `{ "atLeast": "18pt" }` | Minimum; grows for larger text |
+| `{ "multiple": factor }` | `{ "multiple": 1.5 }` | Word's "Multiple" spacing: the font's own single line height × 1.5 |
 
 :::caution
 A number in `lineHeight` is a **multiple**, not pt. For exactly 20pt, write `"20pt"`.
 :::
 
-Multiples follow CSS (font size × multiple). docx writes them as "at least font size × multiple" rather than Word's "multiple" spacing: Word multiplies the font's own line height, which comes out 30–40% taller than html and pdf.
+A number and `{ multiple }` are both multiples, but of different things:
+
+- Number `1.5`: at least font size × 1.5, growing if the text is taller. docx writes it as "at least font size × 1.5". Use this by default when you want the same line height in all three formats.
+- `{ "multiple": 1.5 }`: same as Word's Multiple spacing, multiplying the font's own single line height. A Chinese font's single line height is about 1.3 × the font size; Microsoft YaHei is taller, about 1.7×. Use it to match documents made in Word; it's also what `document-render parse` produces.
+
+### How line height is computed
+
+pdf and html compute line height with the rules Windows Word uses for docx (measured on Word 2024), so all three formats come out the same height:
+
+- A font's single line height comes from the font file. Latin fonts: e.g. Calibri 1.221, Arial 1.150. CJK fonts add 0.15 of the font's full height above and below, e.g. SimSun 1.297, DengXian 1.354, Microsoft YaHei 1.715.
+- When a line mixes fonts (Chinese with Latin), the top is the tallest ascent and the bottom the deepest descent.
+- Extra height from Multiple spacing goes below the baseline; extra height from a number or a minimum goes above it; with an exact value the baseline sits at 0.8 of the line height, regardless of font.
+- Table border widths count toward row height, as in Word.
+- The first font in the list that is installed locally is used. If the machine viewing the document has a font this one lacks, heights can differ.
+- html can only set the line height; where the baseline sits inside the line is up to the browser. If the browser uses a different font from the one found at render time, heights can differ too.
 
 ## Borders
 
@@ -91,23 +106,45 @@ One side, as a string or an object:
 - In the string, the three parts can come in any order and all are optional: width defaults to 1pt, style to `solid`, color to black.
 - `"none"` means no line.
 
-Line styles:
+### Line styles
 
-| Value | Meaning | html | Note |
-|---|---|---|---|
-| `none` | none | none | |
-| `solid` | solid | solid | |
-| `dashed` | dashed | dashed | |
-| `dotted` | dotted | dotted | |
-| `dashDot` | dash-dot | drawn as dashed | |
-| `double` | double | double | pdf draws two lines |
-| `wave` | wave | drawn as solid | |
+All 25 of Word's line styles are supported (art borders excluded). Names follow Word, except three: `solid` is Word's single, `dashDot` is dotDash, `dashDotDot` is dotDotDash.
+
+| Value | Looks like |
+|---|---|
+| `none` | no line |
+| `solid` | solid line |
+| `thick` | thick solid line |
+| `dashed` | dashes |
+| `dashSmallGap` | dashes with small gaps |
+| `dotted` | dots |
+| `dashDot` | dash, dot |
+| `dashDotDot` | dash, dot, dot |
+| `dashDotStroked` | slanted dash-dot |
+| `double` | two lines |
+| `triple` | three thin lines |
+| `thinThickSmallGap` `thinThickMediumGap` `thinThickLargeGap` | thin and thick, small, medium or large gap |
+| `thickThinSmallGap` `thickThinMediumGap` `thickThinLargeGap` | thick and thin, small, medium or large gap |
+| `thinThickThinSmallGap` `thinThickThinMediumGap` `thinThickThinLargeGap` | thin, thick, thin; small, medium or large gap |
+| `wave` | wavy line |
+| `doubleWave` | two wavy lines |
+| `threeDEmboss` / `threeDEngrave` | raised / sunken 3D line |
+| `outset` / `inset` | whole box raised / sunken |
+
+For multi-line styles the width is split among the lines and gaps: `double` and `triple` use equal lines and gaps; the thin-thick styles use 1:1:3 (thin line, gap, thick line), with a gap of 2 for medium and 4 for large. For example `3pt thinThickSmallGap`: thin 0.6pt, gap 0.6pt, thick 1.8pt.
+
+How each format draws them:
+
+- docx: writes Word's line style; Word draws it.
+- html: styles CSS has (solid, dashed, dotted, double, ridge, groove, inset, outset) are used directly; others get an SVG pattern over a transparent border.
+- pdf: solid, dashed and dotted use Typst's own strokes. Multi-line styles are drawn as separate solid lines, so lines stay continuous; dash-dot, wave and similar use the same SVG pattern as html.
+- Markdown: no borders.
 
 Word only allows border widths from 0.25pt to 12pt; values outside are clamped.
 
 ## Background: background
 
-Three forms:
+Three forms, plus `"none"`:
 
 ```json
 "background": "#F5F7FA"
@@ -120,6 +157,8 @@ Three forms:
 | solid | a color | ✓ | ✓ | ✓ |
 | pattern | `pattern` name, `color` foreground (default black), `fill` background (default white) | ✓ | blended to a solid color | blended to a solid color |
 | gradient | `gradient` must be `"linear"`, `angle` in degrees (default 90), `stops` with at least two colors | first color only | ✓ | ✓ |
+
+`"background": "none"` means no background. Use it to remove an inherited or built-in background, such as the default gray header.
 
 Pattern names: `pct5` `pct10` `pct20` `pct25` `pct30` `pct40` `pct50` `pct60` `pct70` `pct75` `pct80` `pct90` `horzStripe` `vertStripe` `diagStripe` `reverseDiagStripe` `horzCross` `diagCross` `thinHorzStripe` `thinVertStripe` `thinDiagStripe` `thinReverseDiagStripe` `thinHorzCross` `thinDiagCross`.
 

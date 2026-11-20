@@ -129,16 +129,14 @@ run 对象的字段：
 | `color` | 颜色 | `"#CF222E"` | 文字颜色，简写 |
 | `style` | 字符串 / 数组 / 对象 | `{ "verticalAlign": "super" }` | 完整的文字样式。只能写文字字段，外加 `background` |
 | `href` | 字符串 | `"https://…"` | 链接。默认蓝色（`#0563C1`）加下划线 |
-| `type` | `"InlineCode"` | | 行内代码，外观由 `InlineCode` 组件样式决定 |
+| `type` | `"InlineCode"` / `"InlineMath"` | | `InlineCode` 是行内代码，外观由同名组件样式决定；`InlineMath` 是行内公式，`text` 写 LaTeX，见[公式](/guide/math/) |
 | `field` | `"page"` / `"pages"` / `"sectionPages"` | | 页码、总页数、本节页数，见[分节与页眉页脚](/guide/sections/) |
-| `image` | 字符串 | `"logo.png"` | 行内图片，写了就不显示 `text`，见[图片](/guide/images/) |
+| `image` | 字符串 | `"logo.png"` | 行内图片。这时 `text` 是替代文字，不显示，见[图片](/guide/images/) |
 | `width` / `height` | 数字（pt） | `40` | 行内图片的宽高，只写一个时按比例算另一个 |
 
-run 的样式按这个顺序叠：段落的文字样式 → 行内代码的 `InlineCode` 样式 → 链接默认色 → `bold` 这类简写 → run 的 `style`。
+run 的样式按这个顺序叠：段落的文字样式 → 行内代码的 `InlineCode` 样式（行内公式是 `InlineMath`）→ 链接默认色 → `bold` 这类简写 → run 的 `style`。
 
-:::note[下一版]
-文字以 `\n` 结尾时，Word 里末尾会多一行空行。下一版起 pdf 和 html 也一样多一行，三种格式对齐。
-:::
+文字以 `\n` 结尾时，Word 里末尾会多一行空行，pdf 和 html 也一样多一行，三种格式对齐。
 
 ## 一份完整的例子
 

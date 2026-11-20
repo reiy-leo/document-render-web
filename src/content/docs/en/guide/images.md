@@ -23,7 +23,7 @@ There are two ways to place an image:
 | Prop | Type | Required | Meaning |
 |---|---|---|---|
 | `src` | string | yes | Local path or URL |
-| `alt` | string | no | Alt text; shown as `[alt]` when the image can't be embedded |
+| `alt` | string | no | Alt text. docx stores it as the image's alt text (Word's "Edit Alt Text"), html and pdf as the image alt; shown as `[alt]` when the image can't be embedded |
 | `width` | number (pt) | no | Width |
 | `height` | number (pt) | no | Height. Give one and the other keeps the aspect ratio |
 | `caption` | string | no | Caption below the image; style it with the `caption` part |
@@ -41,7 +41,8 @@ Write `image` in a run:
 
 | Field | Type | Meaning |
 |---|---|---|
-| `image` | string | Local path or URL. `text` is not shown |
+| `image` | string | Local path or URL |
+| `text` | string | Alt text, not shown. docx, html and pdf store it like Image's `alt` |
 | `width` | number (pt) | Width |
 | `height` | number (pt) | Height. Give one and the other keeps the aspect ratio |
 

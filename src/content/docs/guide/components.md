@@ -1,11 +1,11 @@
 ---
 title: 内置组件
-description: document-render 的十四个内置组件：Document、Heading、Text、Code、List、Table、Image、PageBreak、Divider、Quote、Callout、TableOfContents、Section、Slide，以及写在 runs 里的 InlineCode。
+description: document-render 的十六个内置组件：Document、Heading、Text、Code、Math、List、Table、Image、PageBreak、ColumnBreak、Divider、Quote、Callout、TableOfContents、Section、Slide，以及写在 runs 里的 InlineCode 和 InlineMath。
 sidebar:
   order: 2
 ---
 
-内置组件一共十四个，外加只能写在 runs 里的 `InlineCode`。命令行里看完整的 props 定义：
+内置组件一共十六个，外加只能写在 runs 里的 `InlineCode`（行内代码）和 `InlineMath`（行内公式）。命令行里看完整的 props 定义：
 
 ```sh
 document-render catalog          # 列出组件
@@ -18,14 +18,16 @@ document-render catalog --json   # 每个组件 props 的 JSON Schema
 | [Heading](#heading) | 标题，1 到 6 级 | 否 | — |
 | [Text](#text) | 一段正文 | 否 | — |
 | [Code](#code) | 整段代码 | 否 | — |
+| [Math](#math) | 块级公式 | 否 | — |
 | [List](#list) | 列表，可嵌套 | 否 | `level1`…`level9` `marker` `item` |
 | [Table](#table) | 表格 | 否 | 见[表格](/guide/tables/) |
 | [Image](#image) | 图片 | 否 | `caption` |
 | [PageBreak](#pagebreak) | 分页 | 否 | — |
-| [Divider](#divider) | 分割线（下一版） | 否 | — |
-| [Quote](#quote) | 引用（下一版） | 否 | — |
-| [Callout](#callout) | 提示框（下一版） | 否 | — |
-| [TableOfContents](#tableofcontents) | 目录（下一版） | 否 | `title` `entry` |
+| [ColumnBreak](#columnbreak) | 分栏符 | 否 | — |
+| [Divider](#divider) | 分割线 | 否 | — |
+| [Quote](#quote) | 引用 | 否 | — |
+| [Callout](#callout) | 提示框 | 否 | — |
+| [TableOfContents](#tableofcontents) | 目录 | 否 | `title` `entry` |
 | [Section](#section) | 分节 | 是 | — |
 | [Slide](#slide) | 一页幻灯片 | 是 | `title` `body` |
 
@@ -99,6 +101,31 @@ document-render catalog --json   # 每个组件 props 的 JSON Schema
 默认样式：等宽字体、9pt、行高 1.4、底色 `#F6F8FA`、内边距 8pt、段后 8pt、`keepTogether`。
 
 docx 的段落只在有边框时才用 `padding`，所以代码块在 docx 里没有内边距，渲染时会警告一次。要内边距，给它加一条和底色同色的边框。
+
+## Math
+
+块级公式，单独占一行，写 LaTeX。
+
+| prop | 类型 | 必填 | 说明 |
+|---|---|---|---|
+| `latex` | 字符串 | 是 | LaTeX 源码，不用写 `$$`。JSON 里反斜杠写两个：`\\frac` |
+| `number` | 整数或字符串 | 否 | 编号，写 `1` 就在右边显示「(1)」 |
+
+```json
+"quadratic": { "type": "Math", "props": { "latex": "x = \\frac{-b \\pm \\sqrt{b^2-4ac}}{2a}", "number": 1 } }
+```
+
+默认样式：居中、段前 6pt、段后 6pt。
+
+## InlineMath
+
+行内公式。跟 InlineCode 一样只能写在 runs 里，`text` 是 LaTeX 源码，不用写 `$`：
+
+```json
+{ "type": "InlineMath", "text": "a^2+b^2=c^2" }
+```
+
+跟着所在段落的文字样式走，改外观写组件样式 `InlineMath`。能写哪些 LaTeX、各格式怎么出，见[公式](/guide/math/)。
 
 ## List
 
@@ -186,12 +213,21 @@ docx 的段落只在有边框时才用 `padding`，所以代码块在 docx 里�
 
 html 直接打开时看不出分页，打印或加 `--paged` 时才分页。
 
+## ColumnBreak
+
+分栏符：在分栏的节里，后面的内容从下一栏顶上开始，跟 Word 的「分栏符」一样。没有 props。
+
+```json
+"next-col": { "type": "ColumnBreak" }
+```
+
+- 节没分栏时，docx 和 pdf 当分页（Word、Typst 都这样），html 忽略。
+- Markdown 没有分栏，丢掉并给一次警告。
+- 页眉页脚里不能放。
+
+分栏怎么设，见[分节与页眉页脚](/guide/sections/#分栏符columnbreak)。
+
 ## Divider
-
-:::note[下一版]
-Divider、Quote、Callout、TableOfContents 是下一版新增的组件，v0.1.0-alpha.2 里还没有。
-:::
-
 
 分割线，一条横线。没有 props，外观全由样式决定，线就是段落的下边框。
 
@@ -272,7 +308,7 @@ docx 更新域时，Word 用「目录 1」到「目录 6」样式重排各项。
 
 ## Section
 
-分节。每节从新的一页开始，能单独设纸张、方向、页边距、分栏、页眉页脚和页码起始值。只能直接放在 root 下面。
+分节。每节从新的一页开始，能单独设纸张、方向、页边距、分栏、页眉页脚、页码起始值和页码格式。只能直接放在 root 下面。
 
 ```json
 "body": {
@@ -304,4 +340,4 @@ props 和用法见[分节与页眉页脚](/guide/sections/)。
 ## 下一步
 
 - [样式](/guide/styles/)：样式写在哪、怎么叠加。
-- [表格](/guide/tables/)、[图片](/guide/images/)、[分节与页眉页脚](/guide/sections/)。
+- [表格](/guide/tables/)、[图片](/guide/images/)、[分节与页眉页脚](/guide/sections/)、[公式](/guide/math/)。

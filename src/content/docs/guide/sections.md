@@ -32,6 +32,7 @@ sidebar:
 | `marginTop` 等 | `"30mm"` | 单边页边距，覆盖 `margin` |
 | `header` / `footer` | `"hdr"` | 页眉、页脚用的元素 id |
 | `pageNumberStart` | `1` | 页码从几开始 |
+| `pageNumberFormat` | `"lowerRoman"` | 页码用什么数字，默认阿拉伯数字 |
 
 ## 分节：Section
 
@@ -61,7 +62,8 @@ Section 的 props：
 | `columns` | 数字或 `{ count, gap }` | 分栏，`gap` 默认 21pt |
 | `headerDistance` / `footerDistance` | 长度 | 页眉、页脚离纸边多远，默认 0.5in |
 | `header` / `footer` | id、对象或 `null` | 本节的页眉、页脚，见下文 |
-| `pageNumberStart` | 整数 | 本节页码从几重新开始 |
+| `pageNumberStart` | 整数 | 本节页码从几重新开始；不写就接着上一节数 |
+| `pageNumberFormat` | 字符串 | 本节页码用什么数字，见下文「页码格式」 |
 
 ## 页眉页脚
 
@@ -88,7 +90,7 @@ Section 的 props：
 - `first`、`even` 也会沿用。封面写了 `"first": null`，后面各节的首页也留空，要显示就在那一节重新设 `first`。
 - 只要设了 `first`（包括 `null`），本节首页就单独处理（Word 的「首页不同」）。页眉和页脚共用这个开关：只给页眉设了 `first` 时，首页的页脚用 `default`。
 - 任何一节设了 `even`，整份文档就开「奇偶页不同」。没设 `even` 的节，偶数页用 `default`。
-- 页眉页脚里的元素不能同时出现在正文里，也不能放 `PageBreak`、`Section`、`Slide`。
+- 页眉页脚里的元素不能同时出现在正文里，也不能放 `PageBreak`、`ColumnBreak`、`Section`、`Slide`。
 - 它们的样式继承根元素（`Document`）。
 - 页眉页脚里也能放图片，见[图片](/guide/images/)。
 
@@ -110,6 +112,47 @@ Section 的 props：
 - `text` 可以不写。写了就是占位值，Word 更新域之前、html 不分页时显示它。
 - 页码按 Word 的规则数：每节接着上一节往下数；节上写了 `pageNumberStart` 就从那个数重新开始。
 - 奇偶页按页码算，不按物理页数。
+
+### 页码格式
+
+`pageNumberFormat` 管页码用什么数字，名字跟 Word 一样。写在 `meta.page` 或 `Section` 上，没写的节沿用上一节。
+
+| 值 | 样子 |
+|---|---|
+| `decimal`（默认） | 1, 2, 3 |
+| `lowerRoman` | i, ii, iii, iv |
+| `upperRoman` | I, II, III, IV |
+| `lowerLetter` | a, b, …, z, aa, bb（过了 z 重复字母，跟 Word 一样） |
+| `upperLetter` | A, B, …, Z, AA, BB |
+| `chineseCounting` | 一、二、三……十、十一、二十 |
+
+- 只有 `page` 跟格式走。`pages` 和 `sectionPages` 一直是阿拉伯数字，跟 Word 一样。
+- pdf 的目录（TableOfContents）也按标题所在节的格式和起始页码写页码。
+- 页码是 0 或负数时没有罗马数字、字母写法，照阿拉伯数字写。
+- html 加 `--paged` 时由脚本按格式填页码；目录的页码由 Paged.js 自己数，不跟 `pageNumberStart` 和 `pageNumberFormat`。
+
+常见用法：前言一节用小写罗马数字，正文一节从 1 重新数：
+
+```json
+"front": { "type": "Section", "props": { "pageNumberFormat": "lowerRoman", "pageNumberStart": 1 }, "children": ["preface"] },
+"body":  { "type": "Section", "props": { "pageNumberFormat": "decimal", "pageNumberStart": 1 }, "children": ["ch1"] }
+```
+
+## 分栏符：ColumnBreak
+
+分栏的节里放一个 `{ "type": "ColumnBreak" }`，后面的内容从下一栏顶上开始，跟 Word 的「分栏符」一样。没有 props。
+
+```json
+"two-col": { "type": "Section", "props": { "columns": 2 }, "children": ["left", "break", "right"] },
+"break":   { "type": "ColumnBreak" }
+```
+
+| | docx | pdf | html |
+|---|---|---|---|
+| 分栏的节里 | Word 分栏符 | Typst `colbreak()` | 后面的元素从下一栏开始 |
+| 节没分栏时 | 当分页 | 当分页 | 忽略 |
+
+Markdown 没有分栏，丢掉并给一次警告。页眉页脚里不能放。
 
 ## 完整例子
 

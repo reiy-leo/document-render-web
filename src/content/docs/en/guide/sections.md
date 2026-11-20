@@ -32,6 +32,7 @@ All fields are in [Page setup](/en/reference/page/). The common ones:
 | `marginTop` etc. | `"30mm"` | One margin, overrides `margin` |
 | `header` / `footer` | `"hdr"` | Element id used as header / footer |
 | `pageNumberStart` | `1` | First page number |
+| `pageNumberFormat` | `"lowerRoman"` | Number style for page numbers; Arabic by default |
 
 ## Sections: Section
 
@@ -61,7 +62,8 @@ Section props:
 | `columns` | number or `{ count, gap }` | Columns; `gap` defaults to 21pt |
 | `headerDistance` / `footerDistance` | length | Distance of header / footer from the paper edge, default 0.5in |
 | `header` / `footer` | id, object or `null` | This section's header / footer; see below |
-| `pageNumberStart` | integer | Restart page numbers at this value |
+| `pageNumberStart` | integer | Restart page numbers at this value; if unset, numbering continues from the previous section |
+| `pageNumberFormat` | string | Number style for this section's page numbers, see "Page number format" below |
 
 ## Headers and footers
 
@@ -88,7 +90,7 @@ Rules:
 - `first` and `even` carry over too. If the cover sets `"first": null`, later sections also get an empty first page until one sets `first` again.
 - Setting `first` (even to `null`) turns on "different first page" for that section. Header and footer share this switch: if only the header sets `first`, the first-page footer uses `default`.
 - If any section sets `even`, the whole document turns on "different odd and even pages". Sections without `even` use `default` on even pages.
-- Header and footer elements can't also appear in the body, and can't contain `PageBreak`, `Section` or `Slide`.
+- Header and footer elements can't also appear in the body, and can't contain `PageBreak`, `ColumnBreak`, `Section` or `Slide`.
 - They inherit the root (`Document`) style.
 - Images work in headers and footers too; see [Images](/en/guide/images/).
 
@@ -110,6 +112,47 @@ Write `field` in a run:
 - `text` is optional. If given, it is a placeholder shown before Word updates fields, or in html without paging.
 - Numbering follows Word's rules: each section continues from the previous one; `pageNumberStart` restarts it.
 - Odd and even pages go by page number, not physical page count.
+
+### Page number format
+
+`pageNumberFormat` sets the number style, with Word's names. Put it on `meta.page` or a `Section`; sections without it keep the previous section's.
+
+| Value | Looks like |
+|---|---|
+| `decimal` (default) | 1, 2, 3 |
+| `lowerRoman` | i, ii, iii, iv |
+| `upperRoman` | I, II, III, IV |
+| `lowerLetter` | a, b, …, z, aa, bb (after z letters repeat, as in Word) |
+| `upperLetter` | A, B, …, Z, AA, BB |
+| `chineseCounting` | 一、二、三……十、十一、二十 |
+
+- Only `page` follows the format. `pages` and `sectionPages` are always Arabic, as in Word.
+- In pdf, the table of contents (TableOfContents) also uses each heading's section format and start number.
+- Page numbers of 0 or below have no Roman or letter form and are written in Arabic.
+- In html with `--paged` the script fills page numbers in the chosen format; table-of-contents page numbers are counted by Paged.js and ignore `pageNumberStart` and `pageNumberFormat`.
+
+A common setup: lowercase Roman numerals for the front matter, then restart at 1 for the body:
+
+```json
+"front": { "type": "Section", "props": { "pageNumberFormat": "lowerRoman", "pageNumberStart": 1 }, "children": ["preface"] },
+"body":  { "type": "Section", "props": { "pageNumberFormat": "decimal", "pageNumberStart": 1 }, "children": ["ch1"] }
+```
+
+## Column breaks: ColumnBreak
+
+Put `{ "type": "ColumnBreak" }` in a multi-column section and what follows starts at the top of the next column, like Word's column break. No props.
+
+```json
+"two-col": { "type": "Section", "props": { "columns": 2 }, "children": ["left", "break", "right"] },
+"break":   { "type": "ColumnBreak" }
+```
+
+| | docx | pdf | html |
+|---|---|---|---|
+| In a multi-column section | Word column break | Typst `colbreak()` | what follows starts in the next column |
+| Section without columns | page break | page break | ignored |
+
+Markdown has no columns; it is dropped with one warning. Not allowed in headers and footers.
 
 ## Complete example
 

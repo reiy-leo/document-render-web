@@ -14,7 +14,7 @@ Legend: ✓ supported; ✗ ignored with a warning; — ignored silently.
 | `align` | `left` `center` `right` `justify` `distribute` | `"justify"` | Alignment. `distribute` spreads characters evenly | ✓ | ✓ | ✓ `distribute` treated as `justify`, with warning | ✓ |
 | `spaceBefore` | length or `"Nline"` | `12`, `"0.5line"` | Space before | | ✓ | ✓ | ✓ |
 | `spaceAfter` | same | `6` | Space after | | ✓ | ✓ | ✓ |
-| `lineHeight` | multiple, length or `{ atLeast }` | `1.5`, `"20pt"` | Line height; see [Values](/en/reference/units/) | ✓ | ✓ | ✓ | ✓ minimum treated as exact |
+| `lineHeight` | multiple, length, `{ atLeast }` or `{ multiple }` | `1.5`, `"20pt"`, `{ "multiple": 1.5 }` | Line height; see [Values](/en/reference/units/#line-height-lineheight) | ✓ | ✓ | ✓ | ✓ |
 | `marginLeft` | length | `"2em"` | Left indent of the whole paragraph | | ✓ | ✓ | ✓ |
 | `marginRight` | length | `"2em"` | Right indent of the whole paragraph | | ✓ | ✓ | ✓ |
 | `textIndent` | length | `"2em"` | First-line indent | ✓ | ✓ | ✓ | ✓ |
@@ -40,16 +40,14 @@ Legend: ✓ supported; ✗ ignored with a warning; — ignored silently.
 - Two-character first-line indent: `"textIndent": "2em"`.
 - "First line flush, the rest indented" (numbered clauses, references): `"hangingIndent": "2em"`.
 - Indent the whole paragraph: `"marginLeft": "2em"`; combines with either of the above.
-
-:::note[Next release]
-In docx, `hangingIndent` currently pushes the first line out to the left, unlike pdf and html. From the next release the first line stays put in all three formats.
-:::
+- In all three formats `hangingIndent` keeps the first line in place and moves the other lines in.
+- When an indent is in `em`, docx also writes Word's character-based indent (leftChars, rightChars, firstLineChars, hangingChars), so in Word the indent follows the font size.
 
 ## Spacing
 
 - Space before and after doesn't inherit; it only applies to the paragraph that sets it.
 - Built-in defaults: paragraphs 6pt after; headings 12pt before (level 1: 18pt), 6pt after.
-- Word keeps space before at the start of a section and after a manual page break. pdf currently drops it; from the **next release** it matches Word.
+- Word keeps space before at the start of a section and after a manual page break, and so does pdf.
 
 ## Example
 

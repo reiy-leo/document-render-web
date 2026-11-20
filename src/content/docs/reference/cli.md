@@ -1,6 +1,6 @@
 ---
 title: 命令行
-description: document-render 的命令和参数：render、check、catalog，以及标准输入输出、自动读取的目录和调试变量。
+description: document-render 的命令和参数：render、check、catalog、parse，以及标准输入输出、自动读取的目录和调试变量。
 sidebar:
   order: 1
 ---
@@ -9,6 +9,7 @@ sidebar:
 document-render render <输入> -o <输出> [选项]
 document-render check <输入> [选项]
 document-render catalog [--json] [--catalog <路径>]...
+document-render parse <docx> [-o <json>] [--assets <目录>]
 document-render --version
 document-render --help
 ```
@@ -20,14 +21,15 @@ document-render --help
 ```sh
 document-render render report.json -o report.docx
 document-render render report.json -o report.html --paged
+document-render render report.json -o report.md
 document-render render report.json -o report.pdf --style-sets themes/ --style-set formal
 ```
 
 | 参数 | 说明 |
 |---|---|
 | `<输入>` | JSON 文件。写 `-` 从标准输入读 |
-| `-o, --output <文件>` | 输出文件，必填。按扩展名选格式：`.docx`、`.pdf`、`.html` 或 `.htm`，下一版加 `.md`。写 `-` 输出到标准输出，这时要配 `--format` |
-| `-f, --format <格式>` | 指定格式：`html`、`docx`、`pdf`，下一版加 `md`。不写就看输出文件的扩展名 |
+| `-o, --output <文件>` | 输出文件，必填。按扩展名选格式：`.docx`、`.pdf`、`.html` 或 `.htm`、`.md`。写 `-` 输出到标准输出，这时要配 `--format` |
+| `-f, --format <格式>` | 指定格式：`html`、`docx`、`pdf`、`md`，大小写都行。不写就看输出文件的扩展名 |
 | `--paged` | 只对 html 有用：内嵌 Paged.js，打开就按页显示 |
 | `--catalog <路径>` | 自定义组件的定义文件或目录，可以写多次 |
 | `--style-sets <路径>` | 样式集文件或目录，可以写多次 |
@@ -38,6 +40,8 @@ document-render render report.json -o report.pdf --style-sets themes/ --style-se
 ```sh
 cat report.json | document-render render - -o - -f pdf > report.pdf
 ```
+
+`.md` 出的是 GitHub 风格的 Markdown（GFM），只留结构，不留样式，见[各格式支持情况](/reference/format-support/#markdown)。
 
 `xlsx`、`pptx` 要到第二版。现在写这两个扩展名会报错。
 
@@ -61,7 +65,7 @@ document-render check report.json
 # ok：展开后 12 个元素
 ```
 
-「展开后」是指自定义组件展开成内置组件以后的元素数。
+「展开后」是指自定义组件展开成内置组件以后的元素数。LaTeX 写错、解析不了的公式会列成警告，不算校验失败。
 
 ## catalog
 
@@ -79,6 +83,27 @@ document-render catalog --catalog my-components/
 | `--catalog <路径>` | 一起列出这些定义里的自定义组件，可以写多次 |
 
 `catalog` 不读当前目录的 `catalog/`，要看自定义组件就用 `--catalog` 指定。
+
+## parse
+
+把 `.docx` 读成 document-render 的 JSON，图片导到 JSON 旁边的目录。能读哪些内容，见[从 Word 读回 JSON](/guide/parse/)。
+
+```sh
+document-render parse report.docx -o report.json                   # 图片导到 report.assets/
+document-render parse report.docx > report.json                    # JSON 输出到标准输出
+document-render parse report.docx -o out/report.json --assets img  # 图片导到 out/img/
+```
+
+| 参数 | 说明 |
+|---|---|
+| `<输入>` | docx 文件。写 `-` 从标准输入读 |
+| `-o, --output <文件>` | 输出的 JSON 文件。不写或写 `-` 时输出到标准输出 |
+| `--assets <目录>` | 图片导到哪个目录，相对 JSON 所在的目录。默认是「JSON 文件名.assets」，比如 `report.assets/` |
+
+- JSON 里图片写相对路径，所以 JSON 和图片目录要放在一起，再 render 时才找得到。
+- 输出到标准输出时，图片目录按当前目录算；文件名取输入的 docx，从标准输入读时叫 `document.assets/`。
+- 文档里没有图片时不建目录。
+- 认不出的内容在标准错误里给警告，以「警告：」开头，不会中断。
 
 ## mcp
 

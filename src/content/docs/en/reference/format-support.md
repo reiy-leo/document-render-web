@@ -1,11 +1,11 @@
 ---
 title: Format support
-description: Where the same JSON differs between docx, pdf and html — support tables for components, images, style fields, pagination and headers/footers, plus next-release changes.
+description: Where the same JSON differs between docx, pdf, html and Markdown — support tables for components, images, formulas, style fields, pagination and headers/footers, plus next-release changes.
 sidebar:
   order: 10
 ---
 
-The same JSON aims to look the same in all three formats. Styles a format can't express are ignored with a warning (once per field), never an error.
+The same JSON aims to look the same in all three formats. Markdown keeps structure only; see the "Markdown" section below. Styles a format can't express are ignored with a warning (once per field), never an error.
 
 Legend: ✓ supported; ✗ ignored with a warning; — ignored silently.
 
@@ -25,12 +25,14 @@ Legend: ✓ supported; ✗ ignored with a warning; — ignored silently.
 |---|---|---|---|
 | Heading | ✓ also gets Word "Heading 1–6" | ✓ | ✓ |
 | Text, Code, List | ✓ | ✓ | ✓ |
+| Math, InlineMath | Word equations (OMML), editable | Typst math | MathML, no scripts |
 | Code `lineNumbers` | ✓ | ✓ | ✓ |
 | Table | ✓ part styles written per cell | ✓ | ✓ |
 | Image | png, jpeg, gif, webp only | no URLs | ✓ |
 | PageBreak | ✓ | ✓ | when printing or with `--paged` |
-| Divider, Quote, Callout (next release) | ✓ padding and line width go into the indent; `radius` ✗ | ✓ | ✓ |
-| TableOfContents (next release) | Word TOC field; page numbers after updating fields | ✓ page numbers computed, clickable | links; page numbers with `--paged` |
+| ColumnBreak | column break; page break in a section without columns | `colbreak()`; page break in a section without columns | ✓ in columns; — without columns |
+| Divider, Quote, Callout | ✓ padding and line width go into the indent; `radius` ✗ | ✓ | ✓ |
+| TableOfContents | Word TOC field; page numbers after updating fields | ✓ page numbers computed, clickable | links; page numbers with `--paged` |
 | Section | ✓ extra empty paragraph at each section end holds its settings | ✓ | with `--paged`; printing uses the first section's paper |
 | Slide | level-2 heading plus content, then a page break; `body` part ✗ | one per page | one per page (16:9 box) |
 
@@ -66,7 +68,7 @@ Legend: ✓ supported; ✗ ignored with a warning; — ignored silently.
 | Field | docx | pdf | html |
 |---|---|---|---|
 | `align: "distribute"` | ✓ | as `justify`, ✗ | ✓ |
-| `lineHeight: { atLeast }` | ✓ | ✓ | as exact |
+| `lineHeight`, all forms | ✓ Word computes it | ✓ computed with Word's rules | ✓ computed with Word's rules; baseline position is up to the browser |
 | `autoSpace` | ✗ | ✓ | ✓ |
 | `kinsoku` | ✗ | — on by default | ✓ |
 | `wrap: false` | ✗ | ✗ | ✓ |
@@ -82,7 +84,8 @@ Legend: ✓ supported; ✗ ignored with a warning; — ignored silently.
 | `radius` | ✗ | ✓ | ✓ |
 | `background` pattern | ✓ | blended to solid | blended to solid |
 | `background` gradient | first color | ✓ | ✓ |
-| border `dashDot` / `wave` | ✓ | ✓ | drawn as dashed / solid |
+| all 25 border line styles | ✓ | ✓ multi-line styles as separate solid lines, dash-dot and wave as patterns | ✓ SVG patterns where CSS has none |
+| `background: "none"` | ✓ | ✓ | ✓ |
 | `borderDiagonal` | not implemented | not implemented | not implemented |
 | `textRotation` | table cells only | ✓ | ✓ |
 
@@ -101,11 +104,11 @@ Legend: ✓ supported; ✗ ignored with a warning; — ignored silently.
 
 ## pdf fonts
 
-- Default CJK fonts are tried in this order: PingFang SC, Hiragino Sans GB, Noto Sans CJK SC, Source Han Sans SC, Microsoft YaHei.
+- Default CJK fonts are tried in this order: PingFang SC, Hiragino Sans GB, Microsoft YaHei, Noto Sans CJK SC, Source Han Sans SC. YaHei comes early because Windows has no PingFang SC and Word substitutes YaHei when opening the docx, so pdf matches Windows Word.
 - If none is found, Typst's bundled fonts are used and CJK characters may be missing.
 - Your own `fontFamily` goes in front of the default list.
 
-## Markdown (next release)
+## Markdown
 
 `-o report.md` or `-f md` writes Markdown in GitHub's flavor (GFM). Markdown has no styling, so only the structure is kept. Useful for READMEs, feeding to AI, or diffs.
 
@@ -120,24 +123,15 @@ Legend: ✓ supported; ✗ ignored with a warning; — ignored silently.
 | Quote | `>` |
 | Callout | A GitHub alert `> [!NOTE]`; 💡 becomes TIP, ⚠️ WARNING, ❗ IMPORTANT, ⛔ 🚫 CAUTION; other icons stay in front of the text |
 | Divider | `---` |
+| Math, InlineMath | `$$…$$` as its own block (numbers as `\tag{1}`), `$…$` |
 | TableOfContents | A list of links to the headings; each heading it lists gets an `<a id>` anchor |
 | Image | `![alt](src)` with the path as written, not embedded; `caption` becomes an italic line below |
 | Section, Slide | Content only; a Slide's `title` becomes a level-2 heading |
 
-Dropped with a warning: PageBreak, headers and footers, page-number fields. Dropped silently: fonts, sizes, colors, spacing, borders, alignment and other styling.
+Dropped with a warning: PageBreak, ColumnBreak, headers and footers, page-number fields. Dropped silently: fonts, sizes, colors, spacing, borders, alignment and other styling.
 
 ## Next release
 
-These are on the development branch but not released yet (latest release: `v0.1.0-alpha.2`):
+This is already in the code but not released yet (latest release: `v0.1.0-alpha.4`):
 
-- New format: Markdown (`.md`), see “Markdown (next release)” above.
-- pdf, html: text ending in a line break gets one more empty line at the end, like Word.
-- pdf: exact line heights are no longer stretched by the font; changing font size in a cell keeps the line height.
-- pdf: a cell's own line height (e.g. the header's `lineHeight`) is no longer lost.
-- pdf: glyphs sit in the line box using the font's own ascender/descender, no longer riding high.
-- pdf: space before/after is no longer dropped when the paragraph has left/right indents.
-- pdf: space before is kept at section starts and after manual page breaks, like Word.
-- pdf: font weights are normalized per family, so fonts like MiSans with non-round weights bold correctly.
-- docx: `hangingIndent` no longer pushes the first line to the left.
-- docx: the paragraph anchoring an absolutely positioned image no longer takes up a line.
-- html `--paged`: the dashed lines and gaps between sections on screen are gone.
+- Superscript and subscript: size and raise come from the superscript and subscript values built into the font, as in Word; with Chinese text the East Asian font's values are used. In `v0.1.0-alpha.4` html always shrinks to 0.75 of the font size and pdf uses Typst's default.

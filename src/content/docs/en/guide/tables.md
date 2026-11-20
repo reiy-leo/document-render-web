@@ -59,7 +59,7 @@ Cell object fields:
 - If any column is a ratio, the table fills the text width (or the `width` in its style).
 - If all columns are fixed or auto, the table is as wide as its columns add up to.
 - Without `widths`, columns share the width equally. A count that doesn't match the columns also falls back to equal widths, with a warning.
-- When ratio and auto columns are mixed, an auto column takes its text width, capped at one ratio share; longer text wraps. All three formats get the same widths. (Next release; in v0.1.0-alpha.2 PDF squeezes the auto column.)
+- When ratio and auto columns are mixed, an auto column takes its text width, capped at one ratio share; longer text wraps. All three formats get the same widths.
 - With only fixed and auto columns and no `tableLayout`, all three formats use auto layout.
 
 Example: a section title bar with a thin color strip on the left and a cell that grows with the title:
@@ -128,6 +128,12 @@ Part styles can be written in three places: the element's `parts`, `Table.part` 
   "lastRow": { "bold": true, "borderTop": "1.5pt double #333333" },
   "lastColumn": { "align": "right" }
 }
+```
+
+The header is bold on a light gray background (`#F3F3F3`) by default. To drop the gray, set `"background": "none"` on the header part; no format paints a background then, though a cell's own `background` is still painted:
+
+```json
+"parts": { "header": { "background": "none" } }
 ```
 
 Parts accept `padding`, `paddingLeft` and friends, affecting only the cells in that part; unset sides keep `cellPadding`. `verticalAlign` (`top` `middle` `bottom`) and `textRotation` on a part control text position and direction inside the cells.

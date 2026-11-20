@@ -70,13 +70,28 @@ sidebar:
 | 数字 | `1.5` | 倍数：字号 × 1.5 |
 | `em` 或 `%` | `"1.5em"`、`"150%"` | 同样是倍数 |
 | 其他长度 | `"20pt"` | 固定值 |
-| `{ "atLeast": 长度 }` | `{ "atLeast": "18pt" }` | 最小值 |
+| `{ "atLeast": 长度 }` | `{ "atLeast": "18pt" }` | 最小值，字大了会撑高 |
+| `{ "multiple": 倍数 }` | `{ "multiple": 1.5 }` | Word 的「多倍行距」：字体自己的单倍行高 × 1.5 |
 
 :::caution
 `lineHeight` 写数字是**倍数**，不是 pt。要固定 20pt，写 `"20pt"`。
 :::
 
-倍数按 CSS 算（字号 × 倍数）。docx 里写成「最小值 = 字号 × 倍数」，不用 Word 的「多倍行距」。Word 的倍数乘的是字体自己的行高，会比 html、pdf 高出三四成。
+数字和 `{ multiple }` 都叫倍数，乘的东西不一样：
+
+- 数字 `1.5`：至少字号 × 1.5，字比它高时撑开。docx 里写成「最小值 = 字号 × 1.5」。想让三种格式行高一致，默认用这个。
+- `{ "multiple": 1.5 }`：跟 Word 的多倍行距一样，乘的是字体自己的单倍行高。中文字体的单倍行高大约是字号的 1.3 倍，微软雅黑更高，约 1.7 倍。要和 Word 做的文档对上时用它，`document-render parse` 读出来的也是这种。
+
+### 行高怎么算
+
+pdf 和 html 的行高照 Windows 版 Word 排 docx 的规则算（在 Word 2024 上实测过），三种格式出来一样高：
+
+- 一种字体的单倍行高要看字体文件。西文字体比如 Calibri 1.221、Arial 1.150；中日韩字体在字体全高的上下各加 0.15 倍，比如宋体 1.297、等线 1.354、微软雅黑 1.715。
+- 一行里有几种字体（中文配西文）时，上沿取最高的，下沿取最深的。
+- 多倍行距多出来的高度加在基线下面；数字和最小值多出来的加在基线上面；固定值的基线在行高的 0.8 处，跟字体无关。
+- 表格横线的粗细也算进行高，跟 Word 一样。
+- 字体按「列表里第一个本机找得到的」算。本机没有、看文档那台电脑有的字体，行高会有出入。
+- html 只能定行高，基线在行里的位置还是浏览器自己分。浏览器用的字体和生成时找到的不一样时，行高也会有出入。
 
 ## 边框
 
@@ -91,23 +106,45 @@ sidebar:
 - 字符串里三样顺序随意，都能省：线宽默认 1pt，线型默认 `solid`，颜色默认黑色。
 - `"none"` 表示没有线。
 
-线型：
+### 线型
 
-| 值 | 意思 | html | 说明 |
-|---|---|---|---|
-| `none` | 无 | none | |
-| `solid` | 实线 | solid | |
-| `dashed` | 虚线 | dashed | |
-| `dotted` | 点线 | dotted | |
-| `dashDot` | 点划线 | 画成 dashed | |
-| `double` | 双线 | double | pdf 画成两条线 |
-| `wave` | 波浪线 | 画成 solid | |
+支持 Word 的全部 25 种线型（艺术边框除外）。名字照抄 Word，只有三个不一样：`solid` 是 Word 的 single，`dashDot` 是 dotDash，`dashDotDot` 是 dotDotDash。
+
+| 值 | 样子 |
+|---|---|
+| `none` | 没有线 |
+| `solid` | 实线 |
+| `thick` | 粗实线 |
+| `dashed` | 虚线 |
+| `dashSmallGap` | 空隙很小的虚线 |
+| `dotted` | 点线 |
+| `dashDot` | 一划一点 |
+| `dashDotDot` | 一划两点 |
+| `dashDotStroked` | 斜着的一划一点 |
+| `double` | 双线 |
+| `triple` | 三条细线 |
+| `thinThickSmallGap` `thinThickMediumGap` `thinThickLargeGap` | 一细一粗两条，空隙小、中、大 |
+| `thickThinSmallGap` `thickThinMediumGap` `thickThinLargeGap` | 一粗一细两条，空隙小、中、大 |
+| `thinThickThinSmallGap` `thinThickThinMediumGap` `thinThickThinLargeGap` | 细粗细三条，空隙小、中、大 |
+| `wave` | 波浪线 |
+| `doubleWave` | 两条波浪线 |
+| `threeDEmboss` / `threeDEngrave` | 凸起、凹下去的立体线 |
+| `outset` / `inset` | 整个框凸出来、凹进去 |
+
+几条线的线型，线宽按比例分给每条线和中间的空：`double`、`triple` 的线和空一样宽；细粗这几种是细线、空、粗线 1:1:3，中空隙的空是 2，大空隙是 4。比如 `3pt thinThickSmallGap`：细线 0.6pt，空 0.6pt，粗线 1.8pt。
+
+各格式怎么画：
+
+- docx：直接写 Word 的线型，Word 自己画。
+- html：CSS 有的（solid、dashed、dotted、double、ridge、groove、inset、outset）直接用；CSS 没有的，用 SVG 图案盖在一条透明边上。
+- pdf：实线、虚线、点线用 Typst 自带的线。几条线的线型拆成几条实线画，线都是整条的；点划线、波浪线这些用跟 html 同一份 SVG 图案。
+- Markdown：没有边框。
 
 Word 的线宽只能在 0.25pt 到 12pt 之间，超出时取最近的值。
 
 ## 背景：background
 
-三种写法：
+三种写法，外加 `"none"`：
 
 ```json
 "background": "#F5F7FA"
@@ -120,6 +157,8 @@ Word 的线宽只能在 0.25pt 到 12pt 之间，超出时取最近的值。
 | 纯色 | 颜色 | ✓ | ✓ | ✓ |
 | 底纹 | `pattern` 底纹名，`color` 前景色（默认黑），`fill` 底色（默认白） | ✓ | 混成纯色 | 混成纯色 |
 | 渐变 | `gradient` 只能是 `"linear"`，`angle` 角度（默认 90），`stops` 至少两个颜色 | 取第一个颜色 | ✓ | ✓ |
+
+`"background": "none"` 表示不画底色，用来去掉继承来的或内置的底色，比如表头默认的灰底。
 
 底纹名：`pct5` `pct10` `pct20` `pct25` `pct30` `pct40` `pct50` `pct60` `pct70` `pct75` `pct80` `pct90` `horzStripe` `vertStripe` `diagStripe` `reverseDiagStripe` `horzCross` `diagCross` `thinHorzStripe` `thinVertStripe` `thinDiagStripe` `thinReverseDiagStripe` `thinHorzCross` `thinDiagCross`。
 

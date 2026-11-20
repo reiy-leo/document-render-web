@@ -20,13 +20,13 @@ Legend: ✓ supported; ✗ ignored with a warning; — ignored silently.
 | `borderInsideV` | `"none"` | Inner vertical table lines; defaults to `border` | ✓ | ✓ | ✓ |
 | `borderDiagonal` | | Diagonal cell line | not implemented | not implemented | not implemented |
 
-How to write one side (string, object, `"none"`) and the line styles: [Values](/en/reference/units/).
+How to write one side (string, object, `"none"`) and the 25 line styles: [Values](/en/reference/units/#line-styles).
 
 ## Background
 
 | Field | Example | Meaning | docx | pdf | html |
 |---|---|---|---|---|---|
-| `background` | `"#F5F7FA"` | Solid color, pattern or gradient | ✓ gradient uses first color | ✓ pattern blended to solid | ✓ pattern blended to solid |
+| `background` | `"#F5F7FA"` | Solid color, pattern or gradient; `"none"` for no background | ✓ gradient uses first color | ✓ pattern blended to solid | ✓ pattern blended to solid |
 
 In a run's `style` it shades only that bit of text.
 

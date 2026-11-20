@@ -129,16 +129,14 @@ Run fields:
 | `color` | color | `"#CF222E"` | Text color, shorthand |
 | `style` | string / array / object | `{ "verticalAlign": "super" }` | Full text style. Text fields only, plus `background` |
 | `href` | string | `"https://…"` | Link. Blue (`#0563C1`) and underlined by default |
-| `type` | `"InlineCode"` | | Inline code, styled by the `InlineCode` component style |
+| `type` | `"InlineCode"` / `"InlineMath"` | | `InlineCode` is inline code, styled by the component style of the same name; `InlineMath` is an inline formula with LaTeX in `text`, see [Math](/en/guide/math/) |
 | `field` | `"page"` / `"pages"` / `"sectionPages"` | | Page number, total pages, pages in section; see [Sections, headers and footers](/en/guide/sections/) |
-| `image` | string | `"logo.png"` | Inline image; `text` is not shown. See [Images](/en/guide/images/) |
+| `image` | string | `"logo.png"` | Inline image. `text` then becomes alt text and is not shown. See [Images](/en/guide/images/) |
 | `width` / `height` | number (pt) | `40` | Inline image size. Give one and the other keeps the aspect ratio |
 
-A run's style is built in this order: the paragraph's text style → `InlineCode` style for inline code → link defaults → shorthands like `bold` → the run's `style`.
+A run's style is built in this order: the paragraph's text style → `InlineCode` style for inline code (`InlineMath` for inline formulas) → link defaults → shorthands like `bold` → the run's `style`.
 
-:::note[Next release]
-When text ends with `\n`, Word shows one more empty line at the end. From the next release pdf and html do the same, so all three match.
-:::
+When text ends with `\n`, Word shows one more empty line at the end; pdf and html do the same, so all three match.
 
 ## A complete example
 
